@@ -1,3 +1,8 @@
+/**
+ * Module: api
+ * Functions for api resources
+ */
+
 var express = require("express"),
   router = express.Router(),
   Profile = require("../models/profile"),

@@ -1,3 +1,8 @@
+/**
+ * Module: index
+ * Functions to serve views
+ */
+
 var express = require("express"),
   router = express.Router();
 

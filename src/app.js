@@ -1,3 +1,8 @@
+/**
+ * Module: app
+ * Entry point to launch express server
+ */
+
 var express = require("express"),
   app = express();
 

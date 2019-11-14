@@ -1,3 +1,8 @@
+/**
+ * Module: auth
+ * Middleware for authentication
+ */
+
 module.exports = function(req, res, next) {
   //   if (req.user) {
   //     next();

@@ -1,15 +1,28 @@
+/**
+ * Module: db
+ * Set-up mysql db connection
+ */
 var mysql = require("mysql");
 
-// //local mysql db connection
-// var connection = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "",
-//   database: "mydb"
-// });
+//local mysql db connection
+var connection = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "mydb"
+});
 
-// connection.connect(function(err) {
-//   if (err) throw err;
-// });
+connection.connect(function(err) {
+  if (err) throw err;
+});
 
-// module.exports = connection;
+exports.query = function(queryStr, params) {
+  connection.query(queryStr, params, function(err, rows, fields) {
+    if (err) {
+      console.log("DB query error:" + err);
+    }
+    return [rows, fields, err];
+  });
+};
+
+module.exports = connection;
