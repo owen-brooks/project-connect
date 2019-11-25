@@ -28,9 +28,15 @@ class Profile extends EventEmitter{
     ]);
   };
 
-  get(profileId) {
-    // for simplicity, profiles are fetched by profileID
-    var qryStr = 'SELECT * FROM PROFILE WHERE profileID = '+profileId;
+  get(profileID) {
+    /**
+     * Purpose:
+     *    Fetches and returns a user's profile in JSON using the profileID.
+     * 
+     * Parameters:
+     *    profileID: unique identifier for the profile
+     */
+    var qryStr = 'SELECT * FROM PROFILE WHERE profileID = '+profileID;
     var self = this;
     db.query(qryStr,function(err,rows,fields){
       if (err)
@@ -42,11 +48,32 @@ class Profile extends EventEmitter{
     });
   };
 
-  update(id, profile) {};
+  update(profile) {
+  };
 
-  add(id,fname,lname,uname,passwd,desc,skills){
+  add(profile){
+    /**
+     * Purpose:
+     *    Adds a Profile to the profile SQL table.
+     * 
+     * Parameters:
+     *    profile
+     *      .profileID: unique identifier for the profile
+     *      .first: first name for the profile
+     *      .last: last namde for the profile
+     *      .username: username for the profile
+     *      .password: password for the profile
+     *      .description: profile description (like a bio?)
+     *      .skills: skill sets for the profile
+     */
     var qryStr = 'INSERT INTO profile (profileID,first,last,username,password,description,skills)'+
-      ' VALUES('+id+',"'+fname+'","'+lname+'","'+uname+'","'+passwd+'","'+desc+'","'+skills+'")';
+      ' VALUES('+profile.profileID+',"'
+                +profile.first+'","'
+                +profile.last+'","'
+                +profile.username+'","'
+                +profile.password+'","'
+                +profile.description+'","'
+                +profile.skills+'")';
     console.log(qryStr);
     var self = this;
     db.query(qryStr,function(err,rows,fields){

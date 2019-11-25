@@ -23,61 +23,55 @@ router.get("/", auth, function(req, res) {
 /******************************* 
     Profile related requests   *
  *******************************/
-router.get("/getProfile", (req, res) => {
+// Get a specific profile
+router.get("/profile", (req, res) => {
   Profile.once('success',function(json){
     console.log(json);
     res.json(json);
     res.end();
   });
-  Profile.get(req.query.profileId);
+  Profile.get(req.query.profileID);
 });
 
-router.post("/addProfile", (req,res) => {
+// Create a specific profile
+router.post("/profile", (req,res) => {
   console.log('api:');
   console.log(req.body);
-  var profileId = req.body.profileId,
-      fname = req.body.fname,
-      lname = req.body.lname,
-      uname = req.body.uname,
-      passwd = req.body.passwd,
-      desc = req.body.desc,
-      skills = req.body.skills;
-
+  var profile = req.body;
   Profile.once('success',function(msg){
     res.write(msg);
     res.end();
   });
-  Profile.add(profileId,fname,lname,uname,passwd,desc,skills);
+  Profile.add(profile);
 });
 
 /******************************* 
     Project related requests   *
  *******************************/
-router.get("/getProject", (req, res) => {
+// Get a specific project
+router.get("/project", (req, res) => {
   Project.once('success',function(json){
     console.log(json);
     res.json(json);
     res.end();
   });
-  Project.get(req.query.projectId);
+  Project.get(req.query.projectID);
 });
 
-router.post("/addProject", (req,res) => {
-  console.log(req.body);
-  var projectId = req.body.projectId,
-      title = req.body.title,
-      owner = req.body.owner,
-      desc = req.body.desc,
-      dateCreated = new Date().toISOString().slice(0,10);
-      lastUpdated = new Date().toISOString().slice(0,10);
-      skills = req.body.skillsNeeded;
+// Create a new project
+router.post("/project", (req,res) => {
+    var project = req.body
+    var currentDate = new Date().toISOString();
+    // add current date and time to the project
+    // sliceing puts the date in the format yyyy-mm-dd hh:mm:ss
+    project.dateCreated = currentDate.slice(0,10)+' '+currentDate.slice(11,19);
+    project.lastUpdated = currentDate.slice(0,10)+' '+currentDate.slice(11,19);
 
-  Project.once('success',function(msg){
+    Project.once('success',function(msg){
     res.write(msg);
     res.end();
   });
-  Project.add(projectId,title,owner,desc,dateCreated,lastUpdated,skills);
+  Project.add(project);
 });
-
 
 module.exports = router;
