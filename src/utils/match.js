@@ -19,7 +19,7 @@ exports.match = function(userProfile, listProjects) {
     ]
   };
   const fuse = new Fuse(listProjects, options); // "list" is the item array
-  return fuse.search(description + skills);
+  return fuse.search(userProfile);
 };
 
 module.exports = utils;
