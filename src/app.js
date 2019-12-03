@@ -6,7 +6,7 @@
 var express = require("express"),
   app = express();
 
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/views"));
 // app.use(require("./middlewares/profiles"));
 app.use(require("./controllers"));
 
