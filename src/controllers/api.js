@@ -74,4 +74,26 @@ router.post("/project", (req,res) => {
   Project.add(project);
 });
 
+/******************************* 
+    Connect related requests   *
+ *******************************/
+// Get a connects for project
+router.get("/connect", (req, res) => {
+  Project.once("success", function(json) {
+    console.log(json);
+    res.json(json);
+    res.end();
+  });
+  Connect.get(req.query.projectID);
+});
+
+router.post("/connect", (req, res) => {
+  var connect = req.body;
+  Connect.once("success", function(msg) {
+    res.write(msg);
+    res.end();
+  });
+  Connect.add(connect);
+});
+
 module.exports = router;
