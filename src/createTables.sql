@@ -11,7 +11,7 @@ CREATE TABLE profile (
 	PRIMARY KEY (profileID)
 );
 CREATE TABLE project (
-	projectID INT,
+	projectID INT NOT NULL AUTO_INCREMENT,
 	title VARCHAR(20),
 	owner INT,
 	description VARCHAR(200),
@@ -22,7 +22,7 @@ CREATE TABLE project (
 	FOREIGN KEY (owner) REFERENCES profile(profileID)
 );
 CREATE TABLE connect (
-	id INT,
+	id INT NOT NULL AUTO_INCREMENT,
 	projectID INT,
 	profileID INT,
 	connectInfo VARCHAR(200),
