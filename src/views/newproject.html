@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Profile</title>
+    <title>Home</title>
     <meta charset="UTF-8" />
     <meta
       name="viewport"
@@ -14,6 +14,7 @@
       crossorigin="anonymous"
     />
   </head>
+
   <body style="background-color: #5a6069;">
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -32,67 +33,41 @@
     ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <div id="nav-placeholder"></div>
-    <form>
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input
-          type="text form-control-lg"
-          class="form-control"
-          id="username"
-          placeholder="Enter username"
-        />
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          type="text form-control-lg"
-          class="form-control"
-          id="password"
-          placeholder="Enter password"
-        />
-      </div>
-      <div class="form-group">
-        <label for="first">First Name</label>
-        <input
-          type="text form-control-lg"
-          class="form-control"
-          id="projectName"
-          placeholder="Enter first name"
-        />
-      </div>
-      <div class="form-group">
-        <label for="last">Last Name</label>
-        <input
-          type="text form-control-lg"
-          class="form-control"
-          id="projectName"
-          placeholder="Enter last name"
-        />
-      </div>
-      <div class="form-group">
-        <label for="description">Description</label>
-        <textarea
-          class="form-control"
-          id="description"
-          rows="3"
-          placeholder="Enter a description about yourself"
-        ></textarea>
-      </div>
-      <div class="form-group">
-        <label for="skillsNeeded">Skills</label>
-        <textarea
-          class="form-control"
-          id="skills"
-          rows="3"
-          placeholder="Enter your skills. For example: Python, front-end, etc."
-        ></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
     <script>
       $(function() {
         $("#nav-placeholder").load("nav.html");
       });
     </script>
+
+    <form>
+      <div class="form-group">
+        <label for="projectName">Project Name</label>
+        <input
+          type="text form-control-lg"
+          class="form-control"
+          id="projectName"
+          placeholder="Enter project name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="description">Project Description</label>
+        <textarea
+          class="form-control"
+          id="description"
+          rows="3"
+          placeholder="Enter a description for your project"
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="skillsNeeded">Skills Needed</label>
+        <textarea
+          class="form-control"
+          id="skillsNeeded"
+          rows="3"
+          placeholder="List the skills needed. For example: Python, front-end, etc."
+        ></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Create Project</button>
+    </form>
   </body>
 </html>
