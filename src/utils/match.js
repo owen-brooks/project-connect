@@ -1,12 +1,31 @@
+/**
+ * Module: match
+ * Functions for matching user profile and projects
+ */
 var Fuse = require("fuse.js");
 
-exports.match = function(userProfile, listProjects) {
+function match(userProfile, listProjects) {
+  var projects = []; // build objects for fuzzy search
+  for (var i = 0; i < listProjects.length; i++) {
+    projects.push({
+      index: i,
+      description: listProjects[i].description,
+      skillsNeeded: listProjects[i].skillsNeeded
+    });
+  }
+  console.log(projects);
+
+  userProfile = userProfile[0].skills;
+
   var options = {
+    id: "index",
     shouldSort: true,
-    threshold: 0.6,
+    tokenize: true,
+    includeScore: true,
+    threshold: 1,
     location: 0,
-    distance: 100,
-    maxPatternLength: 32,
+    maxPatternLength: 640,
+    minMatchCharLength: 3,
     keys: [
       {
         name: "description",
@@ -18,8 +37,15 @@ exports.match = function(userProfile, listProjects) {
       }
     ]
   };
-  const fuse = new Fuse(listProjects, options); // "list" is the item array
-  return fuse.search(userProfile);
-};
+  const fuse = new Fuse(projects, options);
+  var results = fuse.search(userProfile);
 
-module.exports = utils;
+  // get original rows by index
+  project_rows = [];
+  for (const res of results) {
+    project_rows.push(listProjects[res.item]);
+  }
+  return project_rows;
+}
+
+module.exports = match;

@@ -2,9 +2,9 @@
  * Module: profile
  * Functions that use profile table
  */
-'use strict'
+"use strict";
 var db = require("../db");
-var EventEmitter = require('events').EventEmitter;
+var EventEmitter = require("events").EventEmitter;
 
 /**
  * @param  {String} user
@@ -12,11 +12,11 @@ var EventEmitter = require('events').EventEmitter;
  * @return {Boolean}
  */
 
-class Profile extends EventEmitter{
-  constructor(){
+class Profile extends EventEmitter {
+  constructor() {
     super();
   }
-  
+
   login(user, pass) {
     var [
       rows,
@@ -26,36 +26,34 @@ class Profile extends EventEmitter{
       user,
       pass
     ]);
-  };
+  }
 
   get(profileID) {
     /**
      * Purpose:
      *    Fetches and returns a user's profile in JSON using the profileID.
-     * 
+     *
      * Parameters:
      *    profileID: unique identifier for the profile
      */
-    var qryStr = 'SELECT * FROM PROFILE WHERE profileID = '+profileID;
+    var qryStr = "SELECT * FROM PROFILE WHERE profileID = " + profileID;
     var self = this;
-    db.query(qryStr,function(err,rows,fields){
-      if (err)
-        console.log('Error during query processing');
-      else{
-        console.log('got profile!');
-        self.emit('success',rows);
+    db.query(qryStr, function(err, rows, fields) {
+      if (err) console.log("Error during query processing");
+      else {
+        console.log("got profile!");
+        self.emit("success", rows);
       }
     });
-  };
+  }
 
-  update(profile) {
-  };
+  update(profile) {}
 
-  add(profile){
+  add(profile) {
     /**
      * Purpose:
      *    Adds a Profile to the profile SQL table.
-     * 
+     *
      * Parameters:
      *    profile
      *      .profileID: unique identifier for the profile
@@ -66,24 +64,32 @@ class Profile extends EventEmitter{
      *      .description: profile description (like a bio?)
      *      .skills: skill sets for the profile
      */
-    var qryStr = 'INSERT INTO profile (profileID,first,last,username,password,description,skills)'+
-      ' VALUES('+profile.profileID+',"'
-                +profile.first+'","'
-                +profile.last+'","'
-                +profile.username+'","'
-                +profile.password+'","'
-                +profile.description+'","'
-                +profile.skills+'")';
+    var qryStr =
+      "INSERT INTO profile (profileID,first,last,username,password,description,skills)" +
+      " VALUES(" +
+      profile.profileID +
+      ',"' +
+      profile.first +
+      '","' +
+      profile.last +
+      '","' +
+      profile.username +
+      '","' +
+      profile.password +
+      '","' +
+      profile.description +
+      '","' +
+      profile.skills +
+      '")';
     console.log(qryStr);
     var self = this;
-    db.query(qryStr,function(err,rows,fields){
-      if (err)
-        console.log('Error during query processing');
-      else{
-        console.log('added profile!');
-        self.emit('success','added');
+    db.query(qryStr, function(err, rows, fields) {
+      if (err) console.log("Error during query processing");
+      else {
+        console.log("added profile!");
+        self.emit("success", "added");
       }
     });
-  };
+  }
 }
 exports.Profile = Profile;
