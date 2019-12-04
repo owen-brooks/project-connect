@@ -33,7 +33,7 @@
     ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <div id="nav-placeholder"></div>
-   <form class="text-light needs-validation" id="createProfileForm" align="center" method='POST' action='/project' novalidate>
+   <form class="text-light needs-validation" id="createProjectForm" align="center" method='POST' action='/project' novalidate>
          <div align="center">
             <div class="col-md-6">
                <label for="title">Title</label>
@@ -44,14 +44,14 @@
             </div>
                 <div class="col-md-6">
                <label for="description">Description</label>
-               <textarea type="text" class="form-control" id="description" name="description" form="createProfileForm" placeholder="Enter a description about project goals, requirements, etc..." required></textarea>
+               <textarea type="text" class="form-control" id="description" name="description" form="createProjectForm" placeholder="Enter a description about project goals, requirements, etc..." required></textarea>
                <div class="invalid-feedback">
                   Description cannot be blank
                </div>
             </div>
 			<div class="col-md-6">
                <label for="skills">Skills</label>
-               <textarea type="text" class="form-control" id="skills" name="skills"  form="createProfileForm" placeholder="Enter the skills required. For example: Python, front-end, etc." required></textarea>
+               <textarea type="text" class="form-control" id="skills" name="skills"  form="createProjectForm" placeholder="Enter the skills required. For example: Python, front-end, etc." required></textarea>
                <div class="invalid-feedback">
                   Skills cannot be blank
                </div>
