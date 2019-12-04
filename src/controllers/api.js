@@ -13,7 +13,14 @@ var bodyParser = require("body-parser"),
   match = require("../utils/match"),
   auth = require("../middleware/auth");
 
-router.use(bodyParser.urlencoded({ extended: false }));
+  var session = require('client-sessions');
+  router.use(session({
+		cookieName: 'session',
+		secret: 'asdfasdf23423', //we could load all this in from an external file
+		duration: 30 * 60 * 1000,
+		activeDuration: 5 * 60 * 1000, //if timeout, but active, extend timeout by this much
+	}));
+router.use(bodyParser.urlencoded({extended:false})); 
 router.use(bodyParser.json());
 
 // router.get("/", auth, function(req, res) {
@@ -24,6 +31,13 @@ router.use(bodyParser.json());
 /******************************* 
     Profile related requests   *
  *******************************/
+ 
+ router.get("/", auth, function(req, res) {
+  res.write("You have reached the api");
+  res.end();
+});
+
+
 // Get a specific profile
 router.get("/profile", (req, res) => {
   Profile.once("success", function(json) {
@@ -39,7 +53,15 @@ router.post("/profile", (req, res) => {
   console.log("api:");
   console.log(req.body);
   var profile = req.body;
-  Profile.once("success", function(msg) {
+  Profile.once('success',function(msg){
+	  if(msg == 'ER_DUP_ENTRY'){
+		  return res.redirect('/newprofile.html?error=' + msg + '&username=' + req.body.username);
+	  }else if (msg == -1){
+		  return res.redirect('/newprofile.html?error=unknown');
+	  }else{
+		  req.session.userid=req.body.username;
+          return res.redirect('/index.html');
+	  }
     res.write(msg);
     res.end();
   });

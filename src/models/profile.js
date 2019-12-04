@@ -83,30 +83,28 @@ class Profile extends EventEmitter {
      *      .description: profile description (like a bio?)
      *      .skills: skill sets for the profile
      */
-    var qryStr =
-      "INSERT INTO profile (profileID,first,last,username,password,description,skills)" +
-      " VALUES(" +
-      profile.profileID +
-      ',"' +
-      profile.first +
-      '","' +
-      profile.last +
-      '","' +
-      profile.username +
-      '","' +
-      profile.password +
-      '","' +
-      profile.description +
-      '","' +
-      profile.skills +
-      '")';
+    var qryStr = 'INSERT INTO profile (first,last,username,password,description,skills)'+
+      ' VALUES("'+profile.first+'","'
+                +profile.last+'","'
+                +profile.username+'","'
+                +profile.password+'","'
+                +profile.description+'","'
+                +profile.skills+'")';
     console.log(qryStr);
     var self = this;
-    db.query(qryStr, function(err, rows, fields) {
-      if (err) console.log("Error during query processing");
-      else {
-        console.log("added profile!");
-        self.emit("success", "added");
+    db.query(qryStr,function(err,rows,fields){
+      if (err){
+		  if(err.code == 'ER_DUP_ENTRY'){
+			  self.emit('success',err.code);
+		  }else{
+			  self.emit('success',-1);
+		  }
+        console.log('Error during query processing');
+		console.log(err);
+	  }
+      else{
+        console.log('added profile!');
+        self.emit('success','added');
       }
     });
   }
