@@ -45,6 +45,21 @@ router.post("/profile", (req,res) => {
   Profile.add(profile);
 });
 
+// Log in to profile
+router.post("/login", function (req, res) {
+    console.log("Reached login api");
+    Profile.once('loggedin', function (msg) {
+        if (msg == 1) {
+            return res.redirect('/index.html')
+        }
+        else {
+            console.log('Log in Failed')
+            return res.redirect('/signin.html')
+        }
+    });
+    Profile.login(req.body.username, req.body.password)
+});
+
 /******************************* 
     Project related requests   *
  *******************************/

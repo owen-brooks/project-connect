@@ -17,15 +17,34 @@ class Profile extends EventEmitter{
     super();
   }
   
-  login(user, pass) {
-    var [
-      rows,
-      fields,
-      err
-    ] = db.query("SELECT * FROM `profile` WHERE `user` = ? AND `pass` = ?", [
-      user,
-      pass
-    ]);
+  login(username, password) {
+    /**
+     * Purpose:
+     *      Checks if username and password exist in profile table to allow for signing in.
+     *      
+     * Parameters:
+     *      user: Username entered at login
+     *      pass: Password entered at login
+     */
+    console.log("testing");
+    var qryStr = 'SELECT * FROM PROFILE WHERE username = "' + username + '" AND password = "' + password +'";';
+    console.log(qryStr);
+    var self = this;
+    db.query(qryStr, function (err, rows, fields) {
+        if (err)
+            console.log('Error during query processing');
+        else {
+            self.emit('loggedin')
+            if (rows > 0) {
+                console.log('logged in');
+                self.emit(1)
+            }
+            else {
+                console.log('user does not exist');
+                self.emit(0)
+            }
+        }
+    });
   };
 
   get(profileID) {
