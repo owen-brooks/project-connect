@@ -32,67 +32,75 @@
     ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <div id="nav-placeholder"></div>
-    <form>
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input
-          type="text form-control-lg"
-          class="form-control"
-          id="username"
-          placeholder="Enter username"
-        />
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          type="text form-control-lg"
-          class="form-control"
-          id="password"
-          placeholder="Enter password"
-        />
-      </div>
-      <div class="form-group">
-        <label for="first">First Name</label>
-        <input
-          type="text form-control-lg"
-          class="form-control"
-          id="projectName"
-          placeholder="Enter first name"
-        />
-      </div>
-      <div class="form-group">
-        <label for="last">Last Name</label>
-        <input
-          type="text form-control-lg"
-          class="form-control"
-          id="projectName"
-          placeholder="Enter last name"
-        />
-      </div>
-      <div class="form-group">
-        <label for="description">Description</label>
-        <textarea
-          class="form-control"
-          id="description"
-          rows="3"
-          placeholder="Enter a description about yourself"
-        ></textarea>
-      </div>
-      <div class="form-group">
-        <label for="skillsNeeded">Skills</label>
-        <textarea
-          class="form-control"
-          id="skills"
-          rows="3"
-          placeholder="Enter your skills. For example: Python, front-end, etc."
-        ></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-    <script>
-      $(function() {
-        $("#nav-placeholder").load("nav.html");
-      });
-    </script>
+<form class="text-light needs-validation" id="createProfileForm" align="center" method='POST' action='/profile' novalidate>
+         <div align="center">
+            <div class="col-md-6">
+               <label for="firstName">First name</label>
+               <input type="text" class="form-control" id="firstName" name="first" placeholder="First Name" required>
+               <div class="invalid-feedback">
+                  First name cannot be blank
+               </div>
+            </div>
+            <div class="col-md-6">
+               <label for="lastName">Last name</label>
+               <input type="text" class="form-control" id="lastName" name="last" placeholder="Last Name" required>
+               <div class="invalid-feedback">
+                  Last name cannot be blank
+               </div>
+            </div>
+            <div class="col-md-6">
+               <label for="userName">UserName</label>
+               <input type="text" class="form-control" id="userName" name="username" placeholder="Username" required>
+               <div class="invalid-feedback">
+                  Username cannot be blank
+               </div>
+            </div>
+            <div class="col-md-6">
+               <label for="password">Password</label>
+               <input type="password" class="form-control" id="password" name="password" placeholder="Password" minlength="8" required>
+               <div class="invalid-feedback">
+                  Password must be at least 8 characters 
+               </div>
+            </div>
+            <div class="col-md-6">
+               <label for="description">Description</label>
+               <textarea type="text" class="form-control" id="description" name="description" form="createProfileForm" placeholder="Enter a description about yourself..." required></textarea>
+               <div class="invalid-feedback">
+                  Description cannot be blank
+               </div>
+            </div>
+			<div class="col-md-6">
+               <label for="skills">Skills</label>
+               <textarea type="text" class="form-control" id="skills" name="skills"  form="createProfileForm" placeholder="Enter your skills. For example: Python, front-end, etc." required></textarea>
+               <div class="invalid-feedback">
+                  Skills cannot be blank
+               </div>
+            </div>
+         </div>
+         <div class="p-3">
+         <button type="submit" class="btn btn-primary" id="submitBtn" >Create Profile</button>
+         <div>
+      </form>
+      <script>
+         $(function(){
+                  	$("#nav-placeholder").load("noUserNav.html");
+                  });
+         (function() {
+           'use strict';
+           window.addEventListener('load', function() {
+             var forms = document.getElementsByClassName('needs-validation');
+             var validation = Array.prototype.filter.call(forms, function(form) {
+               form.addEventListener('submit', function(event) {
+                 if (form.checkValidity() === false) {
+                   event.preventDefault();
+                   event.stopPropagation();
+                 }
+                 form.classList.add('was-validated');
+               }, false);
+             });
+           }, false);
+         })();
+         
+      </script>
   </body>
 </html>
