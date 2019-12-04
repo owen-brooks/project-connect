@@ -1,9 +1,12 @@
 # project-connect
 
-> connecting students with programming projects
+> connecting people with programming projects
 
 ![Alt text](doc/../docs/logo.png)
-Project connect is a NodeJS web application built as the final project CS375 at Drexel
+
+
+Project connect is a NodeJS web application built as the final project for CS375 at Drexel.
+It's purpose is to connect programmers with others that are looking for help on their projects.
 
 ## how to run
 
