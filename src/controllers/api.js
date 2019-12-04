@@ -10,22 +10,23 @@ var bodyParser = require("body-parser"),
   ProjectModule = require("../models/project"),
   Project = new ProjectModule.Project(),
   ConnectModule = require("../models/connect"),
+  match = require("../utils/match"),
   auth = require("../middleware/auth");
 
-router.use(bodyParser.urlencoded({extended:false})); 
+router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
-router.get("/", auth, function(req, res) {
-  res.write("You have reached the api");
-  res.end();
-});
+// router.get("/", auth, function(req, res) {
+//   res.write("You have reached the api");
+//   res.end();
+// });
 
 /******************************* 
     Profile related requests   *
  *******************************/
 // Get a specific profile
 router.get("/profile", (req, res) => {
-  Profile.once('success',function(json){
+  Profile.once("success", function(json) {
     console.log(json);
     res.json(json);
     res.end();
@@ -34,11 +35,11 @@ router.get("/profile", (req, res) => {
 });
 
 // Create a specific profile
-router.post("/profile", (req,res) => {
-  console.log('api:');
+router.post("/profile", (req, res) => {
+  console.log("api:");
   console.log(req.body);
   var profile = req.body;
-  Profile.once('success',function(msg){
+  Profile.once("success", function(msg) {
     res.write(msg);
     res.end();
   });
@@ -50,7 +51,7 @@ router.post("/profile", (req,res) => {
  *******************************/
 // Get a specific project
 router.get("/project", (req, res) => {
-  Project.once('success',function(json){
+  Project.once("success", function(json) {
     console.log(json);
     res.json(json);
     res.end();
@@ -59,15 +60,17 @@ router.get("/project", (req, res) => {
 });
 
 // Create a new project
-router.post("/project", (req,res) => {
-    var project = req.body
-    var currentDate = new Date().toISOString();
-    // add current date and time to the project
-    // sliceing puts the date in the format yyyy-mm-dd hh:mm:ss
-    project.dateCreated = currentDate.slice(0,10)+' '+currentDate.slice(11,19);
-    project.lastUpdated = currentDate.slice(0,10)+' '+currentDate.slice(11,19);
+router.post("/project", (req, res) => {
+  var project = req.body;
+  var currentDate = new Date().toISOString();
+  // add current date and time to the project
+  // sliceing puts the date in the format yyyy-mm-dd hh:mm:ss
+  project.dateCreated =
+    currentDate.slice(0, 10) + " " + currentDate.slice(11, 19);
+  project.lastUpdated =
+    currentDate.slice(0, 10) + " " + currentDate.slice(11, 19);
 
-    Project.once('success',function(msg){
+  Project.once("success", function(msg) {
     res.write(msg);
     res.end();
   });
@@ -94,6 +97,20 @@ router.post("/connect", (req, res) => {
     res.end();
   });
   Connect.add(connect);
+});
+
+router.get("/match", (req, res) => {
+  if (req.query.profileID) {
+    Profile.once("success", function(json) {
+      Project.once("success", function(projects) {
+        var matches = match(json, projects);
+        res.json(matches);
+        res.end();
+      });
+      Project.getall();
+    });
+    Profile.get(req.query.profileID);
+  }
 });
 
 module.exports = router;
