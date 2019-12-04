@@ -24,18 +24,50 @@
     <div id="nav-placeholder"></div>
     <div align="center">
         <p style="font-size:18pt; color:#ffffff;" align="center">Sign in to Connect</p>
-        <form method=post action='/login'>
-            <input type=text name=username placeholder="Username"><br />
-            <input type=password name=password placeholder="Password"><br />
-            <input type=submit value=Submit>
+        <form class="text-light needs-validation" id="createProfileForm" align="center" method='POST' action='/login' novalidate>
+		<div align="center">
+			<div class="col-md-6">
+               <label for="username">Project Title</label>
+               <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+               <div class="invalid-feedback">
+                  Username cannot be blank
+               </div>
+            </div>
+			<div class="col-md-6">
+               <label for="password">Password</label>
+               <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+               <div class="invalid-feedback">
+                  Password cannot be blank 
+               </div>
+            </div>
+		  </div>
+          <div class="p-3">
+         <button type="submit" class="btn btn-primary" id="submitBtn" >Sign in </button>
+         <div>
         </form>
-        <br />
-        <a style="font-size:12pt; color:#ffffff;" href="/profile.html">Create New Profile</a>
+        <div>
+			<a style="font-size:12pt; color:#ffffff;" href="/profile.html">New User? Create a Profile</a>
+		</div>
     </div>
     <script>
         $(function () {
             $("#nav-placeholder").load("noUserNav.html");
         });
+		(function() {
+           'use strict';
+           window.addEventListener('load', function() {
+             var forms = document.getElementsByClassName('needs-validation');
+             var validation = Array.prototype.filter.call(forms, function(form) {
+               form.addEventListener('submit', function(event) {
+                 if (form.checkValidity() === false) {
+                   event.preventDefault();
+                   event.stopPropagation();
+                 }
+                 form.classList.add('was-validated');
+               }, false);
+             });
+           }, false);
+         })();
     </script>
 </body>
 </html>
