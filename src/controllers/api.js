@@ -17,8 +17,6 @@ var bodyParser = require("body-parser"),
   router.use(session({
 		cookieName: 'session',
 		secret: 'asdfasdf23423', 
-		duration: 30 * 60 * 1000,
-		activeDuration: 5 * 60 * 1000, 
 	}));
 router.use(bodyParser.urlencoded({extended:false})); 
 router.use(bodyParser.json());
@@ -93,15 +91,23 @@ router.post("/login", function (req, res) {
     console.log("Reached login api");
     Profile.once('loggedin', function (msg) {
         if (msg == 1) {
-			      req.session.userid=req.body.username;
-            return res.redirect('/index.html')
+			req.session.userid=req.body.username;
+            return res.redirect('/index.html');
         }
         else {
-            console.log('Log in Failed')
-            return res.redirect('/signin.html')
+            console.log('Log in Failed');
+            return res.redirect('/signin.html');
         }
     });
     Profile.login(req.body.username, req.body.password)
+});
+
+//Log out of profiel
+router.get("/logout", function (req, res) {
+    req.session.reset();
+	console.log('logged out');
+	res.send('success');
+	res.end();
 });
 
 /******************************* 
