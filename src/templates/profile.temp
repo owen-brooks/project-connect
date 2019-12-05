@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <title>Profile</title>
+            <link rel="stylesheet" type="text/css" href="styles.css">
+            {{header}}
+    </head>
+    <body>
+        {{navbar}}
+        <h1>{{first}} {{last}}</h1>
+        
+        <h2>About:</h2>
+        <div id="description">{{description}}</div>
+
+        <h2>Skills:</h2>
+        <div id="skills"></div>
+
+
+    </body>
+    <script>
+        $(document).ready(function(){
+            html = "<ul>";
+            var skillStr = "{{skills}}";
+            skillList = skillStr.split(',');
+            for(skill of skillList){
+                html += "<li>"+skill+"</li>";
+            }
+            html += "</ul>";
+            $('#skills').html(html);
+        });
+    </script>
+</html>

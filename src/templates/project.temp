@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <title>{{title}}</title>
+            <link rel="stylesheet" type="text/css" href="styles.css">
+            {{header}}
+    </head>
+    <body>
+        {{navbar}}
+
+        <h1>{{title}}</h1>
+        <div id="update"></div>
+        
+        <h2>Project Description:</h2>
+        <div id="description">{{description}}</div>
+
+        <h2>Skills Needed:</h2>
+        <div id="skills"></div>
+
+
+    </body>
+    <script>
+        $(document).ready(function(){
+            // Skill list
+            var html = "<ul>";
+            var skillStr = "{{skillsNeeded}}";
+            skillList = skillStr.split(',');
+            for(skill of skillList){
+                html += "<li>"+skill+"</li>";
+            }
+            html += "</ul>";
+            $('#skills').html(html);
+
+            // Update Time
+            var dateUpdate = new Date("{{lastUpdated}}");
+            html = "Last Update: "+dateUpdate.toLocaleDateString();
+            $('#update').html(html);
+        });
+    </script>
+</html>
