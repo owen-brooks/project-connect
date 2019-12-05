@@ -89,11 +89,11 @@ router.post("/profile", (req, res) => {
 });
 
 // Log in to profile
-app.post("/login", function (req, res) {
+router.post("/login", function (req, res) {
     console.log("Reached login api");
     Profile.once('loggedin', function (msg) {
         if (msg == 1) {
-			req.session.userid=req.body.username;
+			      req.session.userid=req.body.username;
             return res.redirect('/index.html')
         }
         else {
