@@ -34,14 +34,14 @@ class Profile extends EventEmitter {
         if (err)
             console.log('Error during query processing');
         else {
-            self.emit('loggedin')
-            if (rows > 0) {
+            console.log(rows.length);
+            if (rows.length > 0) {
                 console.log('logged in');
-                self.emit(1)
+                self.emit('loggedin',1)
             }
             else {
                 console.log('user does not exist');
-                self.emit(0)
+                self.emit('loggedin',0)
             }
         }
     });

@@ -24,10 +24,10 @@
     <div id="nav-placeholder"></div>
     <div align="center">
         <p style="font-size:18pt; color:#ffffff;" align="center">Sign in to Connect</p>
-        <form class="text-light needs-validation" id="createProfileForm" align="center" method='POST' action='/login' novalidate>
+        <form class="text-light needs-validation" id="createProfileForm" align="center" method='POST' action='/api/login' novalidate>
 		<div align="center">
 			<div class="col-md-6">
-               <label for="username">Project Title</label>
+               <label for="username">Username</label>
                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
                <div class="invalid-feedback">
                   Username cannot be blank
@@ -42,7 +42,7 @@
             </div>
 		  </div>
           <div class="p-3">
-         <button type="submit" class="btn btn-primary" id="submitBtn" >Sign in </button>
+         <input type="submit" class="btn btn-primary" id="submitBtn" value="Submit">
          <div>
         </form>
         <div>
