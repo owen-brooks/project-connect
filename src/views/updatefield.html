@@ -37,6 +37,7 @@
          crossorigin="anonymous"
          ></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	  <script src="./common.js"></script>
       <div id="nav-placeholder"></div>
       <table id="profile" style="margin-left:auto; margin-right:auto; margin-top:30px;border-collapse: separate; border-spacing: 2px;">
          <tr>
@@ -46,53 +47,45 @@
          </tr>
       </table>
       <script>
-         var field = getUrlVars()["field"];
-         document.getElementById('field').innerText = 'new ' + field;  
-                function getUrlVars() {
-                  var vars = {};
-                  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-                      vars[key] = value;
-                  });
-                  return vars;}
-                $(function(){
-                         	$("#nav-placeholder").load("nav.html");
-                         });
-                (function() {
-                  'use strict';
-                  window.addEventListener('load', function() {
-                    var forms = document.getElementsByClassName('needs-validation');
-                    var validation = Array.prototype.filter.call(forms, function(form) {
-                      form.addEventListener('submit', function(event) {
-                        if (form.checkValidity() === false) {
-                          event.preventDefault();
-                          event.stopPropagation();
-                        }
-                        form.classList.add('was-validated');
-                      }, false);
-                    });
-                  }, false);
-                })();
-          function update(){
-			var newvalue = document.getElementById('newvalue').value;
-			if(newvalue.length > 0){
-				URL = '/api/updateuser'
-				params = {};
-				params.field = field;
-				params.newvalue = newvalue;
-				$.ajax({ 
-					type: "POST",  
-					url : URL, 
-					data: params,
-					success : function(msg){ 
-						console && console.log( msg ); 
-						window.location.replace("./editprofile.html");
-					},
-					error: function(jgXHR, textStatus,errorThrown){ 
-						alert("Error: " + textStatus + " " + errorThrown);
-					}
-				});
-			}
-		  }
+		var field = getUrlVars()['field'];
+        document.getElementById('field').innerText = 'new ' + field;  
+	
+		$(function(){
+			$("#nav-placeholder").load("nav.html");
+		});
+     
+				
+	  function update(){
+		var newvalue = document.getElementById('newvalue').value;
+		var type = getUrlVars()['type'];
+		var id = getUrlVars()["id"];
+		if(type == 'project'){
+			endpoint = 'updateproject';
+			type = type + '&id=' + id;
+		}else{
+			endpoint = 'updateuser' ;
+			type='user';
+		}
+		if(newvalue.length > 0){
+			URL = '/api/' + endpoint;
+			params = {};
+			params.field = getUrlVars()["field"];
+			params.newvalue = newvalue;
+			params.id = id;
+			$.ajax({ 
+				type: "POST",  
+				url : URL, 
+				data: params,
+				success : function(msg){ 
+					console && console.log( msg ); 
+					window.location.replace("./updatetable.html?type=" + type);
+				},
+				error: function(jgXHR, textStatus,errorThrown){ 
+					alert("Error: " + textStatus + " " + errorThrown);
+				}
+			});
+		}
+	  }
              
       </script>
    </body>

@@ -117,8 +117,30 @@ router.get("/project", (req, res) => {
   Project.get(req.query.projectID);
 });
 
+//Get a specific users projects
+router.get("/userprojects", (req, res) => {
+  Project.once("success", function(json) {
+    console.log(json);
+	res.json(json);
+    res.end();
+  });
+  console.log(req);
+  Project.getbyuser(req.session.userid);
+});
+
+//update project information
+router.post("/updateproject", (req, res) => {
+  Project.once("success", function(msg) {
+	console.log(msg);
+    res.json(msg);
+    res.end();
+  });
+  Project.update(req.body.id, req.body.field, req.body.newvalue);
+});
+
 // Create a new project
 router.post("/project", (req, res) => {
+ console.log(req.body);
   var project = req.body;
   var currentDate = new Date().toISOString();
   // add current date and time to the project
@@ -127,10 +149,9 @@ router.post("/project", (req, res) => {
     currentDate.slice(0, 10) + " " + currentDate.slice(11, 19);
   project.lastUpdated =
     currentDate.slice(0, 10) + " " + currentDate.slice(11, 19);
-
+  project.owner = req.session.userid;
   Project.once("success", function(msg) {
-    res.write(msg);
-    res.end();
+   return res.redirect('/myprojects.html');
   });
   Project.add(project);
 });
