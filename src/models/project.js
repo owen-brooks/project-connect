@@ -31,6 +31,55 @@ class Project extends EventEmitter {
     });
   }
 
+  search(title,skills){
+    /**
+     * Purpose:
+     *  Fetch and return projects containing the title and skill
+     * 
+     * Parameters:
+     *  title: title of the project
+     *  skills: skills to match
+     */
+
+    var skillsPresent = true;
+    var qryStr = "SELECT * FROM project WHERE ";
+    console.log("INFO:");
+    console.log(title);
+    console.log(skills);
+
+    if (skills == ""||skills==undefined){ // empty skills
+      qryStr += "title = '" + title;
+      skillsPresent = false;
+    }
+    else if (title == ""||title==undefined){
+      //nothing
+    }
+    else{ // both filled
+      qryStr += "title = '" + title + "' AND ";
+    }
+    
+    if(skillsPresent == true){
+      qryStr += "skillsNeeded LIKE ";
+      var skillList = skills.split(",");
+      qryStr += "'"
+      for(var skill of skillList){
+        qryStr += "%"+skill.trim()+"%"; //trim removes whitspace
+      }
+    }
+    qryStr += "';";
+
+    console.log(qryStr);
+    var self = this;
+    db.query(qryStr, function(err, rows, fields) {
+      if (err) console.log("Error during query processing");
+      else {
+        console.log("got all matching projects...");
+        self.emit("success", rows);
+      }
+    });
+
+  }
+
   getall() {
     /**
      * Purpose:
