@@ -41,7 +41,7 @@
             var table = "<table><tr><th>Project</th><th>Description</th><th>Skills Needed</th></tr>";
             for(row of json){
                 table += "<tr>"+
-                    "<td>"+row.title+"</td>"+
+                    "<td><a href='/project?projectID="+row.projectID+"'>"+row.title+"</a></td>"+
                     "<td>"+row.description+"</td>"+
                     "<td>"+row.skillsNeeded+"</td></tr>";
             }
