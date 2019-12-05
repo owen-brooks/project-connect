@@ -34,39 +34,65 @@ class Profile extends EventEmitter {
         if (err)
             console.log('Error during query processing');
         else {
-            console.log(rows.length);
             if (rows.length > 0) {
                 console.log('logged in');
-                self.emit('loggedin',1)
+				        self.emit('loggedin', 1)
             }
             else {
                 console.log('user does not exist');
-                self.emit('loggedin',0)
+                self.emit('loggedin', 0)
             }
         }
     });
   };
 
-  get(profileID) {
+  get(username) {
     /**
      * Purpose:
      *    Fetches and returns a user's profile in JSON using the profileID.
      *
      * Parameters:
-     *    profileID: unique identifier for the profile
+     *    username: unique identifier for the profile
      */
-    var qryStr = "SELECT * FROM PROFILE WHERE profileID = " + profileID;
-    var self = this;
+    var qryStr = "SELECT * FROM PROFILE WHERE username = \'" + username + "\'";
+    var self = this;;
     db.query(qryStr, function(err, rows, fields) {
       if (err) console.log("Error during query processing");
       else {
-        console.log("got profile!");
-        self.emit("success", rows);
+			if (rows.length > 0) {
+                console.log('got user');
+				self.emit('success', rows)
+            }
+            else {
+                console.log('user does not exist');
+                self.emit('success', 0)
+            }
       }
     });
   }
 
-  update(profile) {}
+  update(userid, field, newValue) {
+	    /**
+     * Purpose:
+     *    Updates field for the given userid
+     *
+     * Parameters:
+     *    userid: unique identifier for the profile
+	 *	  field: the field to be updated 
+     */
+	   var qryStr = "UPDATE PROFILE SET " + field + "= '" +  newValue + "' WHERE username = '" + userid + "'";
+	   var self = this;
+	   var self = this;;
+	   db.query(qryStr, function(err, rows, fields) {
+		  if (err) console.log(err);
+		  else {
+			console.log('success');
+			self.emit('success', 1)
+
+		  }
+		});
+	  
+  }
 
   add(profile) {
     /**
