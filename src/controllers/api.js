@@ -16,9 +16,9 @@ var bodyParser = require("body-parser"),
   var session = require('client-sessions');
   router.use(session({
 		cookieName: 'session',
-		secret: 'asdfasdf23423', //we could load all this in from an external file
+		secret: 'asdfasdf23423', 
 		duration: 30 * 60 * 1000,
-		activeDuration: 5 * 60 * 1000, //if timeout, but active, extend timeout by this much
+		activeDuration: 5 * 60 * 1000, 
 	}));
 router.use(bodyParser.urlencoded({extended:false})); 
 router.use(bodyParser.json());
@@ -39,6 +39,26 @@ router.use(bodyParser.json());
 
 
 // Get a specific profile
+router.get("/user", (req, res) => {
+  Profile.once("success", function(json) {
+    console.log(json);
+    res.json(json);
+    res.end();
+  });
+  Profile.get(req.session.userid);
+});
+
+//update user information
+router.post("/updateuser", (req, res) => {
+  Profile.once("success", function(msg) {
+	console.log(msg);
+    res.json(msg);
+    res.end();
+  });
+  Profile.update(req.session.userid, req.body.field, req.body.newvalue);
+});
+
+
 router.get("/profile", (req, res) => {
   Profile.once("success", function(json) {
     console.log(json);
@@ -69,10 +89,11 @@ router.post("/profile", (req, res) => {
 });
 
 // Log in to profile
-router.post("/login", function (req, res) {
+app.post("/login", function (req, res) {
     console.log("Reached login api");
     Profile.once('loggedin', function (msg) {
         if (msg == 1) {
+			req.session.userid=req.body.username;
             return res.redirect('/index.html')
         }
         else {
