@@ -1,14 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <title>Project</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-
+    <head>
+        <title>Project</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" 
+        content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link 
+            rel="stylesheet" 
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+            crossorigin="anonymous">
+        <style>
+            .fields{
+            font-weight: bold;
+            }
+            td, th{
+            margin-right: 500px;
+            margin-bottom: 30px;
+            background-color: #262d38;
+            text-align: center;
+            min-width: 200px;
+            height: 50px;
+            color: white;
+            }
+        </style>
+    </head>
 <body style="background-color: #5a6069;">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -22,11 +38,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <div id="nav-placeholder">
     </div>
-    <script>
+    <table id="projects" style="margin-left:auto; margin-right:auto; margin-top:30px;border-collapse: separate; border-spacing: 2px;">
+            <tr>
+               <th>Project Title</th>
+               <th>Update/View</th>
+            </tr>
+    </table>
+        <script> 
         $(function () {
             $("#nav-placeholder").load("nav.html");
         });
     </script>
 </body>
-
 </html>
