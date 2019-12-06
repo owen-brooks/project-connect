@@ -23,6 +23,11 @@
             height: 50px;
             color: white;
             }
+            p{
+            text-align: center;
+            color: white;
+            font-size: 18pt;
+            }
         </style>
     </head>
 <body style="background-color: #5a6069;" onload="getConnections()">
@@ -36,8 +41,7 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <div id="nav-placeholder">
-    </div>
+    <div id="nav-placeholder"></div>
     <div id="table"></div>
         <script> 
         function getConnections(){
@@ -58,7 +62,7 @@
         function populateConnectFields(rows)
         {
             var connects = document.getElementById("table");
-            output = '<table id="connects" style="margin-left:auto; margin-right:auto; margin-top:30px;border-collapse: separate; border-spacing: 2px;">';
+            output = '<p>My Connections</p><table id="connects" style="margin-left:auto; margin-right:auto; border-collapse: separate; border-spacing: 2px;">';
             output += "<tr><th>Project Title</th><th>Project Owner</th><th>Connect Information</th></tr>"
             for (var i = 0; i < rows.length; i++){
                 var tr = "<tr>";
