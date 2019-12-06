@@ -23,7 +23,27 @@ class Connect extends EventEmitter {
       if (err) console.log("Error during query processing");
       else {
         console.log("got connections!");
+        console.log(rows);
         self.emit("success", rows);
+      }
+    });
+  }
+  getbyuser(userid) {
+    /**
+     * Purpose:
+     *    Fetches and returns all connections of a user.
+     * 
+     * Parameters:
+     *    Userid: username
+     */
+    var qryStr = "SELECT connect.projectID, owner, title, connectInfo FROM connect INNER JOIN project ON connect.projectID=project.projectID INNER JOIN profile ON connect.profileID=profile.profileID WHERE username = '" + userid + "';";
+    console.log(qryStr);
+    var self = this;
+    db.query(qryStr, function(err, rows, fields) {
+      if (err) console.log("Error during query processing");
+      else {
+        console.log("got connections!");
+        self.emit("connections", rows);
       }
     });
   }

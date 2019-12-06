@@ -21,7 +21,7 @@
         <a class="nav-link" href="/myprojects.html">My Projects</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/projects.html">Connect</a>
+        <a class="nav-link" href="/connect.html">Connect</a>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto nav-flex-icons">

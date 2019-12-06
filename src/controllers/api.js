@@ -10,6 +10,7 @@ var bodyParser = require("body-parser"),
   ProjectModule = require("../models/project"),
   Project = new ProjectModule.Project(),
   ConnectModule = require("../models/connect"),
+  Connect = new ConnectModule.Connect(),
   match = require("../utils/match"),
   auth = require("../middleware/auth");
 
@@ -167,12 +168,22 @@ router.post("/project", (req, res) => {
  *******************************/
 // Get a connects for project
 router.get("/connect", (req, res) => {
-  Project.once("success", function(json) {
-    console.log(json);
+  Connect.once("success", function(json) {
+    //console.log(json);
     res.json(json);
     res.end();
   });
   Connect.get(req.query.projectID);
+});
+
+// Get all connects for user
+router.get("/userconnections", (req, res) => {
+  Connect.once("connections", function(json) {
+    //console.log(json);
+    res.json(json);
+    res.end();
+  });
+  Connect.getbyuser(req.session.userid);
 });
 
 router.post("/connect", (req, res) => {
