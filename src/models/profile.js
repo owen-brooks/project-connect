@@ -72,27 +72,26 @@ class Profile extends EventEmitter {
   }
 
   update(userid, field, newvalue) {
-	    /**
-     * Purpose:
-     *    Updates field for the given userid
-     *
-     * Parameters:
-     *    userid: unique identifier for the profile
-	 *	  field: the field to be updated
-	 *    newvalue: the new value
-     */
+	  /**
+    * Purpose:
+    *    Updates field for the given userid
+    *
+    * Parameters:
+    *    userid: unique identifier for the profile
+	  *	  field: the field to be updated
+	  *    newvalue: the new value
+    */
 	   var qryStr = "UPDATE PROFILE SET " + field + "= '" +  newvalue + "' WHERE username = '" + userid + "'";
 	   var self = this;
 	   var self = this;;
 	   db.query(qryStr, function(err, rows, fields) {
-		  if (err) console.log(err);
+      if (err) 
+        console.log(err);
 		  else {
-			console.log('success');
-			self.emit('success', 1)
-
+        console.log('success');
+        self.emit('success', 1)
 		  }
 		});
-	  
   }
 
   add(profile) {

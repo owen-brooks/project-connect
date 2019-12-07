@@ -127,6 +127,16 @@ router.get("/project", (req, res) => {
   Project.get(req.query.projectID);
 });
 
+router.get("/search",function(req,res){
+  console.log('fetching projects...');
+  Project.once("success", function(json){
+    console.log(json);
+    res.json(json);
+    res.end();
+  });
+  Project.search(req.query.title,req.query.skills);
+});
+
 //Get a specific users projects
 router.get("/userprojects", (req, res) => {
   Project.once("success", function(json) {

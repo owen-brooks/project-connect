@@ -49,6 +49,10 @@ router.get("/search",function(req,res){
   Project.search(req.query.title,req.query.skills);
 });
 
+router.get("/newproject",function(req,res){
+  render.view('newproject',"",res);
+});
+
 /******************************* 
     Profile related requests   *
  *******************************/
@@ -58,7 +62,7 @@ router.get("/profile",function(req,res){
     console.log(json);
     render.view('profile',json[0],res);
   });
-  Profile.get(req.query.profileID);
+  Profile.get(req.query.username);
 });
 module.exports = router;
 
