@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport",content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>  
+        
+        <link rel="stylesheet" type="text/css" href="styles.css">
+    </head>
+    <body>
+        <div id="nav-placeholder"></div>
+
+        <form>
+            <label for="title">Project Name</label>
+            <input type="text" id="title" name="title">
+
+            <label for="skills">Skills</label>
+            <input type="text" id="skills" name="skills">
+
+            <button type="button" id="searchBtn">Search</button>
+        </form>
+
+        <div id="resultsTable"></div>
+    </body>
+    <script>
+        // Load the navigation bar
+        $(function(){
+            $("#nav-placeholder").load("nav.html");
+        });
+        
+        function getResults(title,skills){
+            params = {
+                title:title,
+                skills:skills
+            };
+            var URL = "./api/search"; 
+            $.ajax({
+                type: "GET",
+                url : URL,
+                dataType : "text",
+                data : params,
+                success : function(json){
+                    console.log(json);
+                    var table = "<table><tr><th>Project</th><th>Description</th><th>Skills Needed</th></tr>";
+                    for(row of JSON.parse(json)){
+                        table += "<tr>"+
+                        "<td><a href='/project?projectID="+row.projectID+"'>"+row.title+"</a></td>"+
+                        "<td>"+row.description+"</td>"+
+                        "<td>"+row.skillsNeeded+"</td></tr>";
+                    }
+                    table+="</table>"
+                    // console.log(table)
+                    $("div#resultsTable").html(table); 
+                },
+                error: function(jgXHR, textStatus, errorThrown){
+                    alert("Error: " + textStatus + " " + errorThrown);
+                }
+            }); 
+        }
+        
+
+        $(document).ready(function(){
+            $('#searchBtn').click(function(){
+                getResults($('#title').val(),$('#skills').val());
+            });
+        });
+    </script>
+</html>
