@@ -2,7 +2,6 @@
  * Module: index
  * Functions to serve views
  */
-
 var express = require("express"),
   router = express.Router(),
   render = require("../middleware/render.js"),
@@ -34,9 +33,20 @@ router.get("/project",function(req,res){
   // get data
   Project.once("success", function(json){
     // make page
-    render.view('projects',json[0],res);
+    console.log(json);
+    render.view('project',json[0],res);
   });
   Project.get(req.query.projectID);
+});
+
+router.get("/search",function(req,res){
+  console.log('fetching projects...');
+  Project.once("success", function(json){
+    // make page
+    console.log(json);
+    render.view('projectSearch',json,res);
+  });
+  Project.search(req.query.title,req.query.skills);
 });
 
 /******************************* 
@@ -44,11 +54,23 @@ router.get("/project",function(req,res){
  *******************************/
 router.get("/profile",function(req,res){
   console.log('fetching profile');
-  // get data
   Profile.once("success", function(json){
-    // make page
+    console.log(json);
     render.view('profile',json[0],res);
   });
   Profile.get(req.query.profileID);
 });
 module.exports = router;
+
+/******************************* 
+        Connect requests       *
+ *******************************/
+router.get("/connect",function(req,res){
+  console.log('fetching projects...');
+  Project.once("success", function(json){
+    // make page
+    console.log(json);
+    render.view('project',json[0],res);
+  });
+  Project.get(req.query.projectID);
+});

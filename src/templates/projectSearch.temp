@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        {{header}}
+    </head>
+    <body>
+        {{navbar}}
+        <form action="">
+            <label for="title">Project Name</label>
+            <input type="text" id="title" name="title">
+
+            <label for="skills">Skills</label>
+            <input type="text" id="skills" name="skills">
+
+            <button type="submit" id="submitBtn">Search</button>
+        </form>
+        <!-- <form class="text-light needs-validation" id="createProfileForm" align="center" method='POST' action='/' novalidate>
+            <div align="center">
+                <div class="col-md-6">
+                    <label for="find">Find</label>
+                    <input type="text" class="form-control" id="find" name="find" placeholder="search" required>
+                    <div class="invalid-feedback">
+                        First name cannot be blank
+                    </div>
+                </div>
+            </div>
+            <div class="p-3">
+                <button type="submit" class="btn btn-primary" id="submitBtn" >Search</button>
+            <div>
+        </form> -->
+
+        <div id="resultsTable"></div>
+    </body>
+    <script>
+        var json = {{rawJSON}};  //json.dumps("{{json}}");
+        for(row of json){
+            console.log(row);
+        }
+
+        $(document).ready(function(){
+            var table = "<table><tr><th>Project</th><th>Description</th><th>Skills Needed</th></tr>";
+            for(row of json){
+                table += "<tr>"+
+                    "<td><a href='/project?projectID="+row.projectID+"'>"+row.title+"</a></td>"+
+                    "<td>"+row.description+"</td>"+
+                    "<td>"+row.skillsNeeded+"</td></tr>";
+            }
+            table+="</table>"
+            $('#submitBtn').click(function(){
+                var searchKey = $('#find').val();
+            });
+
+            $('#resultsTable').html(table);
+        });
+    </script>
+</html>

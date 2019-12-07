@@ -1,0 +1,6 @@
+html body{
+  background-color: #5a6069;
+}
+table, th, td {
+  border: 1px solid black;
+}

@@ -51,6 +51,32 @@ class Project extends EventEmitter {
     });
   }
 
+
+  	update(projectid, field, newvalue) {
+	    /**
+     * Purpose:
+     *    Updates field for the given projectid
+     *
+     * Parameters:
+     *    projectid: unique identifier for the project
+	 *	  field: the field to be updated 
+	 *	  newvalue: the new value
+     */
+	   var qryStr = "UPDATE PROJECT SET " + field + "= '" +  newvalue + "' WHERE projectID = '" + projectid + "'";
+	   var self = this;
+	   var self = this;;
+	   db.query(qryStr, function(err, rows, fields) {
+		  if (err) console.log(err);
+		  else {
+			console.log('success');
+			self.emit('success', projectid);
+
+		  }
+		});
+	  
+  }
+
+
 	update(projectid, field, newvalue) {
 	    /**
      * Purpose:
@@ -75,6 +101,7 @@ class Project extends EventEmitter {
 	  
   }
   
+
   getall() {
     /**
      * Purpose:
