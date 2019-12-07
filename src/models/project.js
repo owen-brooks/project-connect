@@ -51,56 +51,77 @@ class Project extends EventEmitter {
     });
   }
 
-
-  	update(projectid, field, newvalue) {
-	    /**
+  search(title,skills){
+    /**
      * Purpose:
-     *    Updates field for the given projectid
-     *
+     *  Fetch and return projects containing the title and skill
+     * 
      * Parameters:
-     *    projectid: unique identifier for the project
-	 *	  field: the field to be updated 
-	 *	  newvalue: the new value
+     *  title: title of the project
+     *  skills: skills to match
      */
-	   var qryStr = "UPDATE PROJECT SET " + field + "= '" +  newvalue + "' WHERE projectID = '" + projectid + "'";
-	   var self = this;
-	   var self = this;;
-	   db.query(qryStr, function(err, rows, fields) {
-		  if (err) console.log(err);
-		  else {
-			console.log('success');
-			self.emit('success', projectid);
 
-		  }
-		});
-	  
+    var skillsPresent = true;
+    var qryStr = "SELECT * FROM project WHERE ";
+    console.log("INFO:");
+    console.log(title);
+    console.log(skills);
+
+    if (skills == ""||skills==undefined){ // empty skills
+      qryStr += "title = '" + title;
+      skillsPresent = false;
+    }
+    else if (title == ""||title==undefined){
+      //nothing
+    }
+    else{ // both filled
+      qryStr += "title = '" + title + "' AND ";
+    }
+    
+    if(skillsPresent == true){
+      qryStr += "skillsNeeded LIKE ";
+      var skillList = skills.split(",");
+      qryStr += "'"
+      for(var skill of skillList){
+        qryStr += "%"+skill.trim()+"%"; //trim removes whitspace
+      }
+    }
+    qryStr += "';";
+
+    console.log(qryStr);
+    var self = this;
+    db.query(qryStr, function(err, rows, fields) {
+      if (err) console.log("Error during query processing");
+      else {
+        console.log("got all matching projects...");
+        self.emit("success", rows);
+      }
+    });
+
   }
-
 
 	update(projectid, field, newvalue) {
-	    /**
+    /**
      * Purpose:
      *    Updates field for the given projectid
      *
      * Parameters:
      *    projectid: unique identifier for the project
-	 *	  field: the field to be updated 
-	 *	  newvalue: the new value
-     */
-	   var qryStr = "UPDATE PROJECT SET " + field + "= '" +  newvalue + "' WHERE projectID = '" + projectid + "'";
-	   var self = this;
-	   var self = this;;
-	   db.query(qryStr, function(err, rows, fields) {
-		  if (err) console.log(err);
-		  else {
-			console.log('success');
-			self.emit('success', projectid);
-
-		  }
+    *	  field: the field to be updated 
+    *	  newvalue: the new value
+    */
+    var qryStr = "UPDATE PROJECT SET " + field + "= '" +  newvalue + "' WHERE projectID = '" + projectid + "'";
+    var self = this;
+    var self = this;
+    db.query(qryStr, function(err, rows, fields) {
+      if (err) 
+        console.log(err);
+      else {
+        console.log('success');
+        self.emit('success', projectid);
+      }
 		});
-	  
   }
-  
 
   getall() {
     /**
@@ -118,6 +139,7 @@ class Project extends EventEmitter {
       }
     });
   }
+  
   add(project) {
     /**
      * Purpose:
