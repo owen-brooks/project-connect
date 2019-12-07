@@ -45,7 +45,7 @@ function update(value){
 			}
 			var value = document.createElement("td"); 
 			var edit = document.createElement("td"); 
-			if(fieldName != 'username' && fieldName != 'owner'){
+			if(fieldName != 'username' && fieldName != 'owner' && fieldName != 'dateCreated' && fieldName != 'lastUpdated'){
 				var button = document.createElement("button"); 
 				button.setAttribute( "onClick", "update(\'" + buttonValue + "\')" );
 				button.className = 'btn btn-primary';
