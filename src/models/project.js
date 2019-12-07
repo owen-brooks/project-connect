@@ -107,11 +107,12 @@ class Project extends EventEmitter {
      *
      * Parameters:
      *    projectid: unique identifier for the project
-    *	  field: the field to be updated 
-    *	  newvalue: the new value
+    *	    field: the field to be updated 
+    *	    newvalue: the new value
     */
-    var qryStr = "UPDATE PROJECT SET " + field + "= '" +  newvalue + "' WHERE projectID = '" + projectid + "'";
-    var self = this;
+    var currentDate = new Date().toISOString();
+    var lastUpdated = currentDate.slice(0, 10) + " " + currentDate.slice(11, 19);
+    var qryStr = "UPDATE PROJECT SET lastUpdated = '"+ lastUpdated + "', " +field + "= '" +  newvalue + "' WHERE projectID = '" + projectid + "'";
     var self = this;
     db.query(qryStr, function(err, rows, fields) {
       if (err) 
