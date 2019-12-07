@@ -32,7 +32,7 @@
     ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <div id="nav-placeholder"></div>
-<form class="text-light needs-validation" id="createProfileForm" align="center" method='POST' action='/profile' novalidate>
+<form class="text-light needs-validation" id="createProfileForm" align="center" method='POST' action='/api/profile' novalidate>
          <div align="center">
             <div class="col-md-6">
                <label for="firstName">First name</label>
@@ -78,7 +78,7 @@
             </div>
          </div>
          <div class="p-3">
-         <button type="submit" class="btn btn-primary" id="submitBtn" >Create Profile</button>
+         <input type="submit" class="btn btn-primary" id="submitBtn" value="Create Profile">
          <div>
       </form>
       <script>

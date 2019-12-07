@@ -21,24 +21,35 @@ function mergeValues(values, content) {
   return content;
 }
 
-function view(templateName, values, res){
-    /**
-     *  Purpose:
-     *      fill in an HTML template w/ user data
-     *  Use:
-     *      just pass the template, json data and the reponse
-     *      variables in the html template should be surrounded by double brackets
-     *      ie: {{title}}
-     */
+function view(templateName, values, res) {
+  /**
+   *  Purpose:
+   *      fill in an HTML template w/ user data
+   *  Use:
+   *      just pass the template, json data and the reponse
+   *      variables in the html template should be surrounded by double brackets
+   *      ie: {{title}}
+   */
 
-    console.log(values);
-    var fileContent = fs.readFileSync(
-      "src" + path.sep + "templates" + path.sep + templateName + ".temp",
-      "utf8"
-    );
-    fileContent = mergeValues(values, fileContent);
-    res.write(fileContent);
-    res.end();
+
+  console.log(values);
+  var fileContent = fs.readFileSync(
+    "src" + path.sep + "templates" + path.sep + templateName + ".temp",
+    "utf8"
+  );
+  fileContent = mergeValues(values, fileContent);
+  res.write(fileContent);
+  res.end();
+
+  console.log(values);
+  var fileContent = fs.readFileSync(
+    "src" + path.sep + "templates" + path.sep + templateName + ".temp",
+    "utf8"
+  );
+  fileContent = mergeValues(values, fileContent);
+  res.write(fileContent);
+  res.end();
+
 }
 
 module.exports.view = view;

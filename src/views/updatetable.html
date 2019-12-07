@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
    <head>
-      <title>My Projects</title>
+      <title>Update</title>
       <meta charset="UTF-8" />
       <meta
          name="viewport"
@@ -28,7 +28,8 @@
          }
       </style>
    </head>
-   <body style="background-color: #5a6069;" onload="getProjects()">
+   <body style="background-color: #5a6069;" onload="getData()">
+	  <script src="./common.js"></script>
       <script
          src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -45,51 +46,34 @@
          crossorigin="anonymous"
          ></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	  <script src="./common.js"></script>
       <div id="nav-placeholder"></div>
-      <table id="projects" style="margin-left:auto; margin-right:auto; margin-top:30px;border-collapse: separate; border-spacing: 2px;">
-         <tr>
-            <th>Project Title</th>
-            <th>Update/View</th>
-         </tr>
+      <table id="mytable" style="margin-left:auto; margin-right:auto; margin-top:30px;border-collapse: separate; border-spacing: 2px;">
       </table>
       <script>
-         function getProjects(){
-         	var URL = "/api/userprojects"; 
+		
+         function getData(){
+         var URL = "/api/" + getUrlVars()['type'];
+         params = {};
+         params.projectID = getUrlVars()["id"]; 
          	$.ajax({ 
          		type: "GET",  
          		url : URL, 
+				data: params,
          		success : function(msg){ 
-         			console && console.log( msg ); 
-         			populateProjectFields( msg );
+         			console && console.log( msg );					
+         			populateTable( msg );
          		},
          		error: function(jgXHR, textStatus,errorThrown){ 
          			alert("Error: " + textStatus + " " + errorThrown);
          		}
          	});
          }
+        
          
-         function populateProjectFields(rows)
-         {
-			 var projects = document.getElementById("projects");
-			 for (var i = 0; i < rows.length; i++){
-			 var title =  Object.values(rows[i])[1];
-			 var id =  Object.values(rows[i])[0];
-			 projects.appendChild(createNewRow('', title, 'select', id));
-         };
-         }
-         
-         
-         function update(field){
-         	window.location.replace("./updatetable.html?type=project&id=" + field);
-         }
-         
-         $(function(){
-            $("#nav-placeholder").load("nav.html");
-         });
-          
-                
-             
+		$(function(){
+			$("#nav-placeholder").load("nav.html");
+		});
+  
       </script>
    </body>
 </html>

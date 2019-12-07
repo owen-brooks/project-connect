@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Profile</title>
+      <meta charset="UTF-8" />
+      <meta
+         name="viewport"
+         content="width=device-width, initial-scale=1, shrink-to-fit=no"
+         />
+      <link
+         rel="stylesheet"
+         href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+         crossorigin="anonymous"
+         />
+   </head>
+   <body style="background-color: #5a6069;">
+      <script
+         src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+         crossorigin="anonymous"
+         ></script>
+      <script
+         src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+         crossorigin="anonymous"
+         ></script>
+      <script
+         src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+         crossorigin="anonymous"
+         ></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <div id="nav-placeholder"></div>
+      <div id="error-message" class="bg-danger text-light col-md-6 mx-auto mb-3 h5" align="center"> </div>
+      <div id="error-message" class="bg-danger text-light" align="center"> </div>
+      <form class="text-light needs-validation" id="createProfileForm" align="center" method='POST' action='/api/profile' novalidate>
+         <div align="center">
+            <div class="col-md-6">
+               <label for="firstName">First name</label>
+               <input type="text" class="form-control" id="firstName" name="first" placeholder="First Name" required>
+               <div class="invalid-feedback">
+                  First name cannot be blank
+               </div>
+            </div>
+            <div class="col-md-6">
+               <label for="lastName">Last name</label>
+               <input type="text" class="form-control" id="lastName" name="last" placeholder="Last Name" required>
+               <div class="invalid-feedback">
+                  Last name cannot be blank
+               </div>
+            </div>
+            <div class="col-md-6">
+               <label for="userName">UserName</label>
+               <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+               <i id="x-icon"></i> 
+               <div class="invalid-feedback">
+                  Username cannot be blank
+               </div>
+               <div id="username-taken" class="text-danger small">
+               </div>
+            </div>
+            <div class="col-md-6">
+               <label for="password">Password</label>
+               <input type="password" class="form-control" id="password" name="password" placeholder="Password" minlength="8" required>
+               <div class="invalid-feedback">
+                  Password must be at least 8 characters 
+               </div>
+            </div>
+            <div class="col-md-6">
+               <label for="description">Description</label>
+               <textarea type="text" class="form-control" id="description" name="description" form="createProfileForm" placeholder="Enter a description about yourself..." required></textarea>
+               <div class="invalid-feedback">
+                  Description cannot be blank
+               </div>
+            </div>
+            <div class="col-md-6">
+               <label for="skills">Skills</label>
+               <textarea type="text" class="form-control" id="skills" name="skills"  form="createProfileForm" placeholder="Enter your skills. For example: Python, front-end, etc." required></textarea>
+               <div class="invalid-feedback">
+                  Skills cannot be blank
+               </div>
+            </div>
+         </div>
+         <div class="p-3">
+         <button type="submit" class="btn btn-primary" id="submitBtn" >Create Profile</button>
+         <div>
+      </form>
+      <script>
+         var error = getUrlVars()["error"];
+         var username = getUrlVars()["username"];
+         function getUrlVars() {
+           var vars = {};
+           var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+               vars[key] = value;
+           });
+           return vars;}
+         if(error != undefined){
+         	if(username != undefined){
+         		error.split('%20');
+         		document.getElementById('username-taken').innerText = username + ' is Taken';
+         		document.getElementById('username').style.border = "thin solid #ff0000";
+         		document.getElementById('username').class = "error";
+         	}
+         	var errorMessage = document.getElementById('error-message');
+         	errorMessage.innerText = 'An error occurred trying to create profile'
+         }
+                $(function(){
+                         	$("#nav-placeholder").load("noUserNav.html");
+                         });
+                (function() {
+                  'use strict';
+                  window.addEventListener('load', function() {
+                    var forms = document.getElementsByClassName('needs-validation');
+                    var validation = Array.prototype.filter.call(forms, function(form) {
+                      form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                          event.preventDefault();
+                          event.stopPropagation();
+                        }
+         		 
+                        form.classList.add('was-validated');
+                      }, false);
+                    });
+                  }, false);
+                })();
+                
+             
+      </script>
+   </body>
+</html>

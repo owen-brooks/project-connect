@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Home</title>
+    <title>Update Profile</title>
     <meta charset="UTF-8" />
     <meta
       name="viewport"
@@ -13,9 +13,9 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
-  </head>
 
-  <body style="background-color: #5a6069;">
+  </head>
+  <body style="background-color: #5a6069;" onload="getProfile()">
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -33,35 +33,16 @@
     ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <div id="nav-placeholder"></div>
-   <form class="text-light needs-validation" id="createProjectForm" align="center" method='POST' action='/api/project' novalidate>
-         <div align="center">
-            <div class="col-md-6">
-               <label for="title">Title</label>
-               <input type="text" class="form-control" id="title" name="title" placeholder="Title" required>
-               <div class="invalid-feedback">
-                  Title cannot be blank
-               </div>
-            </div>
-                <div class="col-md-6">
-               <label for="description">Description</label>
-               <textarea type="text" class="form-control" id="description" name="description" form="createProjectForm" placeholder="Enter a description about project goals, requirements, etc..." required></textarea>
-               <div class="invalid-feedback">
-                  Description cannot be blank
-               </div>
-            </div>
-			<div class="col-md-6">
-               <label for="skillsNeeded">Skills</label>
-               <textarea type="text" class="form-control" id="skillsNeeded" name="skillsNeeded"  form="createProjectForm" placeholder="Enter the skills required. For example: Python, front-end, etc." required></textarea>
-               <div class="invalid-feedback">
-                  Skills cannot be blank
-               </div>
-            </div>
-         </div>
-         <div class="p-3">
-         <button type="submit" class="btn btn-primary" id="submitBtn" >Create Project</button>
-         <div>
-      </form>
-      <script>
+	<table id="profile" style="margin-left:auto; margin-right:auto; margin-top:30px;border-collapse: separate; border-spacing: 2px;">
+		<tr>
+			<td> </td>
+			<td><input type="text"></td>
+			<td><button>Update</button></td>
+		</tr>
+	</table>
+
+ <script>
+		
          $(function(){
                   	$("#nav-placeholder").load("nav.html");
                   });

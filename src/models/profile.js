@@ -34,39 +34,66 @@ class Profile extends EventEmitter {
         if (err)
             console.log('Error during query processing');
         else {
-            self.emit('loggedin')
-            if (rows > 0) {
+            if (rows.length > 0) {
                 console.log('logged in');
-                self.emit(1)
+				        self.emit('loggedin', 1)
             }
             else {
                 console.log('user does not exist');
-                self.emit(0)
+                self.emit('loggedin', 0)
             }
         }
     });
   };
 
-  get(profileID) {
+  get(username) {
     /**
      * Purpose:
      *    Fetches and returns a user's profile in JSON using the profileID.
      *
      * Parameters:
-     *    profileID: unique identifier for the profile
+     *    username: unique identifier for the profile
      */
-    var qryStr = "SELECT * FROM PROFILE WHERE profileID = " + profileID;
-    var self = this;
+    var qryStr = "SELECT * FROM PROFILE WHERE username = \'" + username + "\'";
+    var self = this;;
     db.query(qryStr, function(err, rows, fields) {
       if (err) console.log("Error during query processing");
       else {
-        console.log("got profile!");
-        self.emit("success", rows);
+			if (rows.length > 0) {
+                console.log('got user');
+				self.emit('success', rows)
+            }
+            else {
+                console.log('user does not exist');
+                self.emit('success', 0)
+            }
       }
     });
   }
 
-  update(profile) {}
+  update(userid, field, newvalue) {
+	    /**
+     * Purpose:
+     *    Updates field for the given userid
+     *
+     * Parameters:
+     *    userid: unique identifier for the profile
+	 *	  field: the field to be updated
+	 *    newvalue: the new value
+     */
+	   var qryStr = "UPDATE PROFILE SET " + field + "= '" +  newvalue + "' WHERE username = '" + userid + "'";
+	   var self = this;
+	   var self = this;;
+	   db.query(qryStr, function(err, rows, fields) {
+		  if (err) console.log(err);
+		  else {
+			console.log('success');
+			self.emit('success', 1)
+
+		  }
+		});
+	  
+  }
 
   add(profile) {
     /**
@@ -83,30 +110,28 @@ class Profile extends EventEmitter {
      *      .description: profile description (like a bio?)
      *      .skills: skill sets for the profile
      */
-    var qryStr =
-      "INSERT INTO profile (profileID,first,last,username,password,description,skills)" +
-      " VALUES(" +
-      profile.profileID +
-      ',"' +
-      profile.first +
-      '","' +
-      profile.last +
-      '","' +
-      profile.username +
-      '","' +
-      profile.password +
-      '","' +
-      profile.description +
-      '","' +
-      profile.skills +
-      '")';
+    var qryStr = 'INSERT INTO profile (first,last,username,password,description,skills)'+
+      ' VALUES("'+profile.first+'","'
+                +profile.last+'","'
+                +profile.username+'","'
+                +profile.password+'","'
+                +profile.description+'","'
+                +profile.skills+'")';
     console.log(qryStr);
     var self = this;
-    db.query(qryStr, function(err, rows, fields) {
-      if (err) console.log("Error during query processing");
-      else {
-        console.log("added profile!");
-        self.emit("success", "added");
+    db.query(qryStr,function(err,rows,fields){
+      if (err){
+		  if(err.code == 'ER_DUP_ENTRY'){
+			  self.emit('success',err.code);
+		  }else{
+			  self.emit('success',-1);
+		  }
+        console.log('Error during query processing');
+		console.log(err);
+	  }
+      else{
+        console.log('added profile!');
+        self.emit('success','added');
       }
     });
   }
