@@ -2,6 +2,22 @@
   class="mb-1 navbar navbar-expand-lg navbar-dark"
   style="background-color: #262d38"
 >
+<script>
+         	var URL = "/api/isAuthenticated"; 
+         	$.ajax({ 
+         		type: "GET",  
+         		url : URL, 
+         		success : function(msg){ 
+         			console && console.log( msg );
+					if (msg == false) {
+						window.location.replace("./signin.html");
+					}
+         		},
+         		error: function(jgXHR, textStatus,errorThrown){ 
+         			alert("Error: " + textStatus + " " + errorThrown);
+         		}
+         	});
+      </script>
   <a class="navbar-brand" href="index.html">
     <img
       src="images/lightning_bolt.png"

@@ -1,14 +1,25 @@
-/**
+ /**
  * Module: auth
  * Middleware for authentication
  */
 
-module.exports = function(req, res, next) {
-  //   if (req.user) {
-  //     next();
-  //   } else {
-  //     res.status(401).end();
-  //   }
-  console.log("Requires auth");
-  next();
-};
+var EventEmitter = require("events").EventEmitter;
+
+class Auth extends EventEmitter {
+  constructor() {
+    super();
+  }
+  
+  isAuthenticated (userid) {
+	if (userid) {
+		console.log("Logged in");
+		this.emit("success", true);
+    } else {
+		console.log("Not logged in");
+		this.emit("success", false);
+    } 
+    console.log("");
+  };
+}
+ 
+exports.Auth = Auth;
