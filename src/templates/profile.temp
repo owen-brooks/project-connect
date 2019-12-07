@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-            <title>Profile</title>
-            <link rel="stylesheet" type="text/css" href="styles.css">
-            {{header}}
+        <title>Profile</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport",content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>  
+        
+        <link rel="stylesheet" type="text/css" href="styles.css">
     </head>
     <body>
-        {{navbar}}
+        <div id="nav-placeholder"></div>
         <h1>{{first}} {{last}}</h1>
         
         <h2>About:</h2>
@@ -18,8 +24,17 @@
 
     </body>
     <script>
-        $(document).ready(function(){
-            html = "<ul>";
+        // Load the navigation bar
+        $(function(){
+            $("#nav-placeholder").load("nav.html");
+        });
+
+        function transformSkillList(){
+        /**
+         * Purpose:
+         *   transform comma seperated list into bullet form
+         */
+            var html = "<ul>";
             var skillStr = "{{skills}}";
             skillList = skillStr.split(',');
             for(skill of skillList){
@@ -27,6 +42,10 @@
             }
             html += "</ul>";
             $('#skills').html(html);
+        }
+
+        $(document).ready(function(){
+            transformSkillList();
         });
     </script>
 </html>
