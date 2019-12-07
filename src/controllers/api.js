@@ -12,7 +12,8 @@ var bodyParser = require("body-parser"),
   ConnectModule = require("../models/connect"),
   Connect = new ConnectModule.Connect(),
   match = require("../utils/match"),
-  auth = require("../middleware/auth");
+  AuthModule = require("../middleware/auth");
+  Auth = new AuthModule.Auth();
 
   var session = require('client-sessions');
   router.use(session({
@@ -31,9 +32,11 @@ router.use(bodyParser.json());
     Profile related requests   *
  *******************************/
  
- router.get("/", auth, function(req, res) {
-  res.write("You have reached the api");
-  res.end();
+ router.get("/isAuthenticated", function(req, res) {
+	Auth.once("success", function (msg) {
+		res.json(msg)
+	});
+	Auth.isAuthenticated(req.session.userid);
 });
 
 

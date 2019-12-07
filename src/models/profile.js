@@ -55,7 +55,7 @@ class Profile extends EventEmitter {
      *    username: unique identifier for the profile
      */
     var qryStr = "SELECT * FROM PROFILE WHERE username = \'" + username + "\'";
-    var self = this;;
+    var self = this;
     db.query(qryStr, function(err, rows, fields) {
       if (err) console.log("Error during query processing");
       else {
