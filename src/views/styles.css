@@ -23,3 +23,7 @@ table{
   border-collapse: separate; 
   border-spacing: 2px;
 }
+
+label { 
+  color: white;
+}

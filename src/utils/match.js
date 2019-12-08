@@ -9,6 +9,8 @@ function match(userProfile, listProjects) {
   for (var i = 0; i < listProjects.length; i++) {
     projects.push({
       index: i,
+      title: listProjects[i].title,
+      projectID: listProjects[i].projectID,
       description: listProjects[i].description,
       skillsNeeded: listProjects[i].skillsNeeded
     });

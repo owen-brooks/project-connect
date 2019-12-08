@@ -13,14 +13,20 @@
     <body>
         <div id="nav-placeholder"></div>
 
-        <form>
-            <label for="title">Project Name</label>
-            <input type="text" id="title" name="title">
-
-            <label for="skills">Skills</label>
-            <input type="text" id="skills" name="skills">
-
-            <button type="button" id="searchBtn">Search</button>
+        <form align="center">
+            <div align="center">
+                <div class="col-md-6">
+                    <label for="title">Project Name</label>
+                    <input type="text" id="title" name="title" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label for="skills">Skills</label>
+                    <input type="text" id="skills" name="skills" class="form-control"> 
+                </div>
+                <div class="p-3">
+                    <button type="button" id="searchBtn" class="btn btn-primary">Search</button>
+                </div>
+            </div>
         </form>
 
         <div id="resultsTable"></div>

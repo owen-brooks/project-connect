@@ -47,7 +47,7 @@ class Connect extends EventEmitter {
       }
     });
   }
-  add(connect) {
+  add(projectID, profileID, connectInfo) {
     /**
      * Purpose:
      *    Adds a Connect to the connect SQL table.
@@ -56,12 +56,12 @@ class Connect extends EventEmitter {
     var self = this;
     var qryStr =
       "INSERT INTO connect (projectID,profileID,connectInfo)" +
-      " VALUES(" +
-      connect.projectID +
-      '",' +
-      connect.profileID +
+      " VALUES (" +
+      projectID +
+      ',' +
+      Object.values(profileID[0])[0] + 
       ',"' +
-      connect.connectInfo +
+      connectInfo +
       '")';
     console.log(qryStr);
     db.query(qryStr, function(err, rows, fields) {

@@ -34,7 +34,8 @@ router.use(bodyParser.json());
  
  router.get("/isAuthenticated", function(req, res) {
 	Auth.once("success", function (msg) {
-		res.json(msg)
+    res.json(msg)
+    res.end
 	});
 	Auth.isAuthenticated(req.session.userid);
 });
@@ -200,17 +201,21 @@ router.get("/userconnections", (req, res) => {
 });
 
 router.post("/connect", (req, res) => {
-  var connect = req.body;
-  Connect.once("success", function(msg) {
-    res.write(msg);
-    res.end();
+  var projectID = req.body.projectID;
+  var connectInfo = req.body.info;
+  Profile.once("success", function(id) {
+    Connect.once("success", function(msg) {
+      return res.redirect('/connect.html');
+    });
+    Connect.add(projectID, id, connectInfo);
   });
-  Connect.add(connect);
+  Profile.getID(req.session.userid);
 });
 
 router.get("/match", (req, res) => {
-  if (req.query.profileID) {
+  if (req.session.userid) {  
     Profile.once("success", function(json) {
+      console.log(json);
       Project.once("success", function(projects) {
         var matches = match(json, projects);
         res.json(matches);
@@ -218,7 +223,7 @@ router.get("/match", (req, res) => {
       });
       Project.getall();
     });
-    Profile.get(req.query.profileID);
+    Profile.get(req.session.userid);
   }
 });
 

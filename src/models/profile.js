@@ -54,7 +54,7 @@ class Profile extends EventEmitter {
      * Parameters:
      *    username: unique identifier for the profile
      */
-    var qryStr = "SELECT * FROM PROFILE WHERE username = \'" + username + "\'";
+    var qryStr = "SELECT * FROM PROFILE WHERE username = '" + username + "';";
     var self = this;
     db.query(qryStr, function(err, rows, fields) {
       if (err) console.log("Error during query processing");
@@ -70,6 +70,25 @@ class Profile extends EventEmitter {
       }
     });
   }
+
+  getID(username){
+    var qryStr = "SELECT profileID FROM PROFILE WHERE username = '" + username + "';";
+    var self = this;
+    db.query(qryStr, function(err, rows, fields){
+      if (err) 
+        console.log("Error during query processing");
+      else {
+			  if (rows.length > 0) {
+          console.log('got profileID');
+				  self.emit('success', rows);
+        }
+        else {
+          console.log('user does not exist');
+          self.emit('success',0);
+        }
+      }
+    } 
+  )};
 
   update(userid, field, newvalue) {
 	  /**
