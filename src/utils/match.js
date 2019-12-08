@@ -24,7 +24,7 @@ function match(userProfile, listProjects) {
     shouldSort: true,
     tokenize: true,
     includeScore: true,
-    threshold: 1,
+    threshold: 0.5,
     location: 0,
     maxPatternLength: 640,
     minMatchCharLength: 3,
@@ -41,6 +41,7 @@ function match(userProfile, listProjects) {
   };
   const fuse = new Fuse(projects, options);
   var results = fuse.search(userProfile);
+  console.log(results);
 
   // get original rows by index
   project_rows = [];

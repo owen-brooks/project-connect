@@ -70,18 +70,37 @@
          			alert("Error: " + textStatus + " " + errorThrown);
          		}
          	}); 
-         }
+        };
+        
+        function remove(btn,projID){
+            var row = btn.parentNode.parentNode;
+            var URL = "/api/remove"; 
+         	$.ajax({ 
+         		type: "POST",  
+                url : URL, 
+                data: {projectID: projID},
+         		success : function(msg){ 
+                    //console && console.log( msg ); 
+                    alert("Project Removed!")
+         		},
+         		error: function(jgXHR, textStatus,errorThrown){ 
+         			alert("Error: " + textStatus + " " + errorThrown);
+         		}
+            });
+            row.parentNode.removeChild(row);
+        };
 
         function populateConnectFields(rows)
         {
             var connects = document.getElementById("myconnections");
             output = '<p>My Connections</p><table id="connects" style="margin-left:auto; margin-right:auto; border-collapse: separate; border-spacing: 2px;">';
-            output += "<tr><th>Project Title</th><th>Project Owner</th><th>Connect Information</th></tr>"
+            output += "<tr><th>Project Title</th><th>Project Owner</th><th>Connect Information</th><th>Remove Connection</th></tr>"
             for (var i = 0; i < rows.length; i++){
                 var tr = "<tr>";
                 tr += "<td><a href='/project?projectID="+Object.values(rows[i])[0]+"'>" + Object.values(rows[i])[2] + "</a></td>";
                 tr += "<td>" + Object.values(rows[i])[1] + "</td>";
-                tr += "<td>" + Object.values(rows[i])[3] + "</td></tr>";
+                tr += "<td>" + Object.values(rows[i])[3] + "</td>";
+                tr += "<td><button type='button' class='btn btn-primary' onclick='remove(this,"+Object.values(rows[i])[0]+")'>Remove</button></td></tr>"; //onclick='remove(" + Object.values(rows[i])[2] +")'
                 output += tr;
             };
             output += "</table>";

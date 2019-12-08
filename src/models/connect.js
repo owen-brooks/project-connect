@@ -52,8 +52,11 @@ class Connect extends EventEmitter {
      * Purpose:
      *    Adds a Connect to the connect SQL table.
      *
+     * Params:
+     *    ProjectID, ProfileID, and connection Information
      */
     var self = this;
+    var qryCheck = "SELECT * FROM connect WHERE projectID = " + projectID + " AND profileID = " + Object.values(profileID[0])[0] +";"
     var qryStr =
       "INSERT INTO connect (projectID,profileID,connectInfo)" +
       " VALUES (" +
@@ -63,14 +66,46 @@ class Connect extends EventEmitter {
       ',"' +
       connectInfo +
       '")';
+    console.log(qryCheck);
     console.log(qryStr);
-    db.query(qryStr, function(err, rows, fields) {
+    db.query(qryCheck, function(err,rows,field){
       if (err) console.log("Error during query processing");
       else {
-        console.log("added connect!");
-        self.emit("success", "added");
+        if (rows.length > 0){
+          console.log(console.log("Connect already exists"));
+          self.emit("success","You are already connected to this project!");
+        }
+        else{
+          db.query(qryStr, function(err, rows, fields) {
+            if (err) console.log("Error during query processing");
+            else {
+              console.log("Connection has been added!");
+              self.emit("success", "Connection has been added!");
+            };
+          });
+        };
+      };
+    });
+  };
+  remove(profileID, projectID){
+    /**
+     * Purpose:
+     *    Removes connection from mysql table
+     *
+     * Params:
+     *    ProjectID, ProfileID, and connection Information
+     */
+    var qryStr = "DELETE FROM connect WHERE profileID = " + Object.values(profileID[0])[0] + " AND projectID = " + projectID + ";";
+    console.log(qryStr);
+    var self = this;
+    db.query(qryStr, function(err, rows, fields) {
+      if (err) console.log("Error during remove query processing");
+      else {
+        console.log("Connection has been removed!");
+        self.emit("success", "Connection has been removed!");
       }
     });
-  }
-}
+  };
+};
+
 exports.Connect = Connect;

@@ -71,7 +71,7 @@
                 data: {projectID: projID, info: connectinfo},
          		success : function(msg){ 
                     //console && console.log( msg ); 
-                    alert("Project Added");
+                    alert(msg);
          		},
          		error: function(jgXHR, textStatus,errorThrown){ 
          			alert("Error: " + textStatus + " " + errorThrown);

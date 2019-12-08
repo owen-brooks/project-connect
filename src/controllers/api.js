@@ -32,6 +32,7 @@ router.use(bodyParser.json());
     Profile related requests   *
  *******************************/
  
+ // Check if authenticated
  router.get("/isAuthenticated", function(req, res) {
 	Auth.once("success", function (msg) {
     res.json(msg)
@@ -41,7 +42,7 @@ router.use(bodyParser.json());
 });
 
 
-// Get a specific profile
+// Get a specific profile by session's user id
 router.get("/user", (req, res) => {
   Profile.once("success", function(json) {
     console.log(json);
@@ -61,7 +62,7 @@ router.post("/updateuser", (req, res) => {
   Profile.update(req.session.userid, req.body.field, req.body.newvalue);
 });
 
-
+// Get a profile by profileID
 router.get("/profile", (req, res) => {
   Profile.once("success", function(json) {
     console.log(json);
@@ -71,7 +72,7 @@ router.get("/profile", (req, res) => {
   Profile.get(req.query.profileID);
 });
 
-// Create a specific profile
+// Add a profile
 router.post("/profile", (req, res) => {
   console.log("api:");
   console.log(req.body);
@@ -128,6 +129,7 @@ router.get("/project", (req, res) => {
   Project.get(req.query.projectID);
 });
 
+// Search projects by title and/or skills
 router.get("/search",function(req,res){
   console.log('fetching projects...');
   Project.once("success", function(json){
@@ -190,6 +192,20 @@ router.get("/connect", (req, res) => {
   Connect.get(req.query.projectID);
 });
 
+// Remove connection
+router.post("/remove", (req, res) => {
+  var projectID = req.body.projectID;
+  console.log("Here is the projectID:");
+  console.log(projectID);
+  Profile.once("success",function(id){
+    Connect.once("success", function(msg) {
+      console.log("Removed");
+    });
+    Connect.remove(id, projectID);
+  });
+  Profile.getID(req.session.userid);
+});
+
 // Get all connects for user
 router.get("/userconnections", (req, res) => {
   Connect.once("connections", function(json) {
@@ -200,18 +216,22 @@ router.get("/userconnections", (req, res) => {
   Connect.getbyuser(req.session.userid);
 });
 
+// Add connection
 router.post("/connect", (req, res) => {
   var projectID = req.body.projectID;
   var connectInfo = req.body.info;
   Profile.once("success", function(id) {
     Connect.once("success", function(msg) {
-      return res.redirect('/connect.html');
+      //return res.redirect('/connect.html');
+      res.write(msg);
+      res.end();
     });
     Connect.add(projectID, id, connectInfo);
   });
   Profile.getID(req.session.userid);
 });
 
+// Match with project
 router.get("/match", (req, res) => {
   if (req.session.userid) {  
     Profile.once("success", function(json) {
@@ -224,7 +244,7 @@ router.get("/match", (req, res) => {
       Project.getall();
     });
     Profile.get(req.session.userid);
-  }
+  };
 });
 
 module.exports = router;
