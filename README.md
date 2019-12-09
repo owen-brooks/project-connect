@@ -4,7 +4,6 @@
 
 ![Alt text](doc/../docs/logo.png)
 
-
 Project connect is a NodeJS web application built as the final project for CS375 at Drexel.
 It's purpose is to connect programmers with others that are looking for help on their projects.
 
@@ -33,3 +32,22 @@ The folder structure is based on the conventions found in [this article](https:/
 - Marykate Owsiany
 - Kat Dearstyne
 - Owen Brooks
+
+*Note: the Github profile for each member can be found under contributors in this repo*
+
+## screenshots
+
+*login view*
+![Alt text](doc/../docs/screenshots/login.png)
+
+*main page view*
+![Alt text](doc/../docs/screenshots/home.png)
+
+*project connect view*
+![Alt text](doc/../docs/screenshots/connecting_page.png)
+
+*project search view*
+![Alt text](doc/../docs/screenshots/search.png)
+
+*project view*
+![Alt text](doc/../docs/screenshots/my_project.png)
