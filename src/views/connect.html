@@ -1,131 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Connect</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" 
-        content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link 
-            rel="stylesheet" 
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
-            crossorigin="anonymous">
-        <style>
-            .fields{
-            font-weight: bold;
-            }
-            td, th{
-            margin-right: 500px;
-            margin-bottom: 30px;
-            background-color: #262d38;
-            text-align: center;
-            min-width: 200px;
-            height: 50px;
-            color: white;
-            }
-            p{
-            text-align: center;
-            color: white;
-            font-size: 18pt;
-            }
-        </style>
-    </head>
-<body style="background-color: #5a6069;" onload="getConnections()">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+  <head>
+    <title>Connect</title>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <style>
+      .fields {
+        font-weight: bold;
+      }
+      td,
+      th {
+        margin-right: 500px;
+        margin-bottom: 30px;
+        background-color: #262d38;
+        text-align: center;
+        min-width: 200px;
+        height: 50px;
+        color: white;
+      }
+      p {
+        text-align: center;
+        color: white;
+        font-size: 18pt;
+      }
+    </style>
+  </head>
+  <body style="background-color: #5a6069;" onload="getConnections()">
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <div id="nav-placeholder"></div>
     <div id="myconnections"></div>
     <div id="matches"></div>
-        <script> 
-        function getConnections(){
-         	var URL = "/api/userconnections"; 
-         	$.ajax({ 
-         		type: "GET",  
-         		url : URL, 
-         		success : function(msg){ 
-                    //console && console.log( msg ); 
-         			populateConnectFields( msg );
-         		},
-         		error: function(jgXHR, textStatus,errorThrown){ 
-         			alert("Error: " + textStatus + " " + errorThrown);
-         		}
-            });
-            var URL = "/api/match"; 
-         	$.ajax({ 
-         		type: "GET",  
-         		url : URL, 
-         		success : function(msg){ 
-                    //console && console.log( msg ); 
-         			populateMatchFields( msg );
-         		},
-         		error: function(jgXHR, textStatus,errorThrown){ 
-         			alert("Error: " + textStatus + " " + errorThrown);
-         		}
-         	}); 
-        };
-        
-        function remove(btn,projID){
-            var row = btn.parentNode.parentNode;
-            var URL = "/api/remove"; 
-         	$.ajax({ 
-         		type: "POST",  
-                url : URL, 
-                data: {projectID: projID},
-         		success : function(msg){ 
-                    //console && console.log( msg ); 
-                    alert("Project Removed!")
-         		},
-         		error: function(jgXHR, textStatus,errorThrown){ 
-         			alert("Error: " + textStatus + " " + errorThrown);
-         		}
-            });
-            row.parentNode.removeChild(row);
-        };
-
-        function populateConnectFields(rows)
-        {
-            var connects = document.getElementById("myconnections");
-            output = '<p>My Connections</p><table id="connects" style="margin-left:auto; margin-right:auto; border-collapse: separate; border-spacing: 2px;">';
-            output += "<tr><th>Project Title</th><th>Project Owner</th><th>Contact Information</th><th>Remove Connection</th></tr>"
-            for (var i = 0; i < rows.length; i++){
-                var tr = "<tr>";
-                tr += "<td><a href='/project?projectID="+Object.values(rows[i])[0]+"'>" + Object.values(rows[i])[1] + "</a></td>";
-                tr += "<td>" + Object.values(rows[i])[2] + "</td>";
-                tr += "<td>" + Object.values(rows[i])[3] + "</td>";
-                tr += "<td><button type='button' class='btn btn-primary' onclick='remove(this,"+Object.values(rows[i])[0]+")'>Remove</button></td></tr>"; //onclick='remove(" + Object.values(rows[i])[2] +")'
-                output += tr;
-            };
-            output += "</table>";
-            connects.innerHTML = output;
-        }
-        
-        function populateMatchFields(rows)
-        {
-            var matches = document.getElementById("matches");
-            output = '<p>Suggested Connections</p><table id="matches" style="margin-left:auto; margin-right:auto; border-collapse: separate; border-spacing: 2px;">';
-            output += "<tr><th>Project Title</th><th>Project Description</th><th>Skills Needed</th></tr>"
-            for (var i = 0; i < rows.length; i++){
-                var tr = "<tr>";
-                tr += "<td><a href='/project?projectID="+Object.values(rows[i])[0]+"'>" + Object.values(rows[i])[1] + "</a></td>";
-                tr += "<td>" + Object.values(rows[i])[3] + "</td>";
-                tr += "<td>" + Object.values(rows[i])[6] + "</td></tr>";
-                output += tr;
-            };
-            output += "</table>";
-            matches.innerHTML = output;
-        }
-
-        $(function () {
-            $("#nav-placeholder").load("nav.html");
+    <script>
+      function getConnections() {
+        var URL = "/api/userconnections";
+        $.ajax({
+          type: "GET",
+          url: URL,
+          success: function(msg) {
+            //console && console.log( msg );
+            populateConnectFields(msg);
+          },
+          error: function(jgXHR, textStatus, errorThrown) {
+            alert("Error: " + textStatus + " " + errorThrown);
+          }
         });
+        var URL = "/api/match";
+        $.ajax({
+          type: "GET",
+          url: URL,
+          success: function(msg) {
+            //console && console.log( msg );
+            populateMatchFields(msg);
+          },
+          error: function(jgXHR, textStatus, errorThrown) {
+            alert("Error: " + textStatus + " " + errorThrown);
+          }
+        });
+      }
+
+      function remove(btn, projID) {
+        var row = btn.parentNode.parentNode;
+        var URL = "/api/remove";
+        $.ajax({
+          type: "POST",
+          url: URL,
+          data: { projectID: projID },
+          success: function(msg) {
+            //console && console.log( msg );
+            alert("Project Removed!");
+          },
+          error: function(jgXHR, textStatus, errorThrown) {
+            alert("Error: " + textStatus + " " + errorThrown);
+          }
+        });
+        row.parentNode.removeChild(row);
+      }
+
+      function populateConnectFields(rows) {
+        var connects = document.getElementById("myconnections");
+        output =
+          '<p>My Connections</p><table id="connects" style="margin-left:auto; margin-right:auto; border-collapse: separate; border-spacing: 2px;">';
+        output +=
+          "<tr><th>Project Title</th><th>Project Owner</th><th>Remove Connection</th></tr>";
+        for (var i = 0; i < rows.length; i++) {
+          var tr = "<tr>";
+          tr +=
+            "<td><a href='/project?projectID=" +
+            Object.values(rows[i])[0] +
+            "'>" +
+            Object.values(rows[i])[1] +
+            "</a></td>";
+          tr += "<td>" + Object.values(rows[i])[2] + "</td>";
+          tr +=
+            "<td><button type='button' class='btn btn-primary' onclick='remove(this," +
+            Object.values(rows[i])[0] +
+            ")'>Remove</button></td></tr>"; //onclick='remove(" + Object.values(rows[i])[2] +")'
+          output += tr;
+        }
+        output += "</table>";
+        connects.innerHTML = output;
+      }
+
+      function populateMatchFields(rows) {
+        var matches = document.getElementById("matches");
+        output =
+          '<p>Suggested Connections</p><table id="matches" style="margin-left:auto; margin-right:auto; border-collapse: separate; border-spacing: 2px;">';
+        output +=
+          "<tr><th>Project Title</th><th>Project Description</th><th>Skills Needed</th></tr>";
+        for (var i = 0; i < rows.length; i++) {
+          var tr = "<tr>";
+          tr +=
+            "<td><a href='/project?projectID=" +
+            Object.values(rows[i])[0] +
+            "'>" +
+            Object.values(rows[i])[1] +
+            "</a></td>";
+          tr += "<td>" + Object.values(rows[i])[3] + "</td>";
+          tr += "<td>" + Object.values(rows[i])[6] + "</td></tr>";
+          output += tr;
+        }
+        output += "</table>";
+        matches.innerHTML = output;
+      }
+
+      $(function() {
+        $("#nav-placeholder").load("nav.html");
+      });
     </script>
-</body>
+  </body>
 </html>
