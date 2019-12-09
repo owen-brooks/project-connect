@@ -63,12 +63,11 @@
 
         function connect(){
             var projID = getUrlVars()["projectID"];
-            var connectinfo = prompt("Enter connection details");
             var URL = "/api/connect"; 
          	$.ajax({ 
          		type: "POST",  
          		url : URL, 
-                data: {projectID: projID, info: connectinfo},
+                data: {projectID: projID},
          		success : function(msg){ 
                     //console && console.log( msg ); 
                     alert(msg);

@@ -94,11 +94,11 @@
         {
             var connects = document.getElementById("myconnections");
             output = '<p>My Connections</p><table id="connects" style="margin-left:auto; margin-right:auto; border-collapse: separate; border-spacing: 2px;">';
-            output += "<tr><th>Project Title</th><th>Project Owner</th><th>Connect Information</th><th>Remove Connection</th></tr>"
+            output += "<tr><th>Project Title</th><th>Project Owner</th><th>Contact Information</th><th>Remove Connection</th></tr>"
             for (var i = 0; i < rows.length; i++){
                 var tr = "<tr>";
-                tr += "<td><a href='/project?projectID="+Object.values(rows[i])[0]+"'>" + Object.values(rows[i])[2] + "</a></td>";
-                tr += "<td>" + Object.values(rows[i])[1] + "</td>";
+                tr += "<td><a href='/project?projectID="+Object.values(rows[i])[0]+"'>" + Object.values(rows[i])[1] + "</a></td>";
+                tr += "<td>" + Object.values(rows[i])[2] + "</td>";
                 tr += "<td>" + Object.values(rows[i])[3] + "</td>";
                 tr += "<td><button type='button' class='btn btn-primary' onclick='remove(this,"+Object.values(rows[i])[0]+")'>Remove</button></td></tr>"; //onclick='remove(" + Object.values(rows[i])[2] +")'
                 output += tr;

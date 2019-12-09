@@ -126,14 +126,16 @@ class Profile extends EventEmitter {
      *      .username: username for the profile
      *      .password: password for the profile
      *      .description: profile description (like a bio?)
+     *      .contact: contact information
      *      .skills: skill sets for the profile
      */
-    var qryStr = 'INSERT INTO profile (first,last,username,password,description,skills)'+
+    var qryStr = 'INSERT INTO profile (first,last,username,password,description,contact,skills)'+
       ' VALUES("'+profile.first+'","'
                 +profile.last+'","'
                 +profile.username+'","'
                 +profile.password+'","'
                 +profile.description+'","'
+                +profile.contact+'","'
                 +profile.skills+'")';
     console.log(qryStr);
     var self = this;

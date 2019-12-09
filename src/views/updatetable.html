@@ -12,10 +12,15 @@
       <script src="./common.js"></script>
       <link rel="stylesheet" type="text/css" href="styles.css">
    </head>
-   <body onload="getData()">
+   <body onload="getData(); getConnects();">
       <div id="nav-placeholder"></div>
-
+      
+      <div>
+      <p>Project Information</p>
       <table id="mytable"></table>
+      </div>
+      <br/>
+      <div id="connects"></div>
       
       <script>
          // Get navbar
@@ -39,6 +44,39 @@
                   }
                });
          }
+         function getConnects(){
+               var URL = "/api/connect";
+               params = {};
+               params.projectID = getUrlVars()["id"]; 
+               $.ajax({ 
+                  type: "GET",  
+                  url : URL, 
+                  data: params,
+                  success : function(msg){ 
+                     //console && console.log( msg );					
+                     populateConnections(msg);
+                  },
+                  error: function(jgXHR, textStatus,errorThrown){ 
+                     alert("Error: " + textStatus + " " + errorThrown);
+                  }
+               });
+         }
+         function populateConnections(rows)
+         {
+            var connects = document.getElementById("connects");
+            output = '<p>Project Connections</p><table id="connects" style="margin-left:auto; margin-right:auto; border-collapse: separate; border-spacing: 2px;">';
+            output += "<tr><th>Username</th><th>Contact</th><th>Skills</th></tr>"
+            for (var i = 0; i < rows.length; i++){
+                var tr = "<tr>";
+                tr += "<td>" + Object.values(rows[i])[0] + "</td>";
+                tr += "<td>" + Object.values(rows[i])[1] + "</td>";
+                tr += "<td>" + Object.values(rows[i])[2] + "</td></tr>";
+                //tr += "<td><button type='button' class='btn btn-primary' onclick='remove(this,"+Object.values(rows[i])[0]+")'>Remove</button></td></tr>"; //onclick='remove(" + Object.values(rows[i])[2] +")'
+                output += tr;
+            };
+            output += "</table>";
+            connects.innerHTML = output;
+        }
       </script>
    </body>
 </html>

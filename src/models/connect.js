@@ -16,7 +16,7 @@ class Connect extends EventEmitter {
      * Purpose:
      *    Fetches and returns connections in JSON using the projectID.
      */
-    var qryStr = "SELECT * FROM connect WHERE projectID = " + projectID + ";";
+    var qryStr = "SELECT username, contact, skills FROM connect INNER JOIN project ON connect.projectID = project.projectID INNER JOIN profile ON connect.profileID = profile.profileID WHERE connect.projectID = " + projectID + ";";
     console.log(qryStr);
     var self = this;
     db.query(qryStr, function(err, rows, fields) {
@@ -36,7 +36,8 @@ class Connect extends EventEmitter {
      * Parameters:
      *    Userid: username
      */
-    var qryStr = "SELECT connect.projectID, owner, title, connectInfo FROM connect INNER JOIN project ON connect.projectID=project.projectID INNER JOIN profile ON connect.profileID=profile.profileID WHERE username = '" + userid + "';";
+    //var qryStr = "SELECT connect.projectID, owner, title, contact FROM connect INNER JOIN project ON connect.projectID=project.projectID INNER JOIN profile ON connect.profileID=profile.profileID WHERE username = '" + userid + "';";
+    var qryStr = "SELECT p.projectID, p.title, p.owner, ownerprof.contact FROM CONNECT AS c INNER JOIN project AS p ON c.projectID=p.projectID INNER JOIN profile AS userprof on c.profileID=userprof.profileID INNER JOIN profile AS ownerprof ON p.owner=ownerprof.username WHERE userprof.username = '" + userid + "';";
     console.log(qryStr);
     var self = this;
     db.query(qryStr, function(err, rows, fields) {
@@ -47,25 +48,23 @@ class Connect extends EventEmitter {
       }
     });
   }
-  add(projectID, profileID, connectInfo) {
+  add(projectID, profileID) {
     /**
      * Purpose:
      *    Adds a Connect to the connect SQL table.
      *
      * Params:
-     *    ProjectID, ProfileID, and connection Information
+     *    ProjectID and ProfileID
      */
     var self = this;
     var qryCheck = "SELECT * FROM connect WHERE projectID = " + projectID + " AND profileID = " + Object.values(profileID[0])[0] +";"
     var qryStr =
-      "INSERT INTO connect (projectID,profileID,connectInfo)" +
+      "INSERT INTO connect (projectID,profileID)" +
       " VALUES (" +
       projectID +
       ',' +
       Object.values(profileID[0])[0] + 
-      ',"' +
-      connectInfo +
-      '")';
+      ');';
     console.log(qryCheck);
     console.log(qryStr);
     db.query(qryCheck, function(err,rows,field){

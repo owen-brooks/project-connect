@@ -7,6 +7,7 @@ CREATE TABLE profile (
 	username VARCHAR(20) UNIQUE NOT NULL,
 	password VARCHAR(32), # use MD5 for encryption?
 	description VARCHAR(200),
+	contact VARCHAR(200),
 	skills VARCHAR(200),
 	PRIMARY KEY (profileID)
 );
@@ -25,7 +26,6 @@ CREATE TABLE connect (
 	id INT NOT NULL AUTO_INCREMENT,
 	projectID INT,
 	profileID INT,
-	connectInfo VARCHAR(200),
 	PRIMARY KEY (id),
 	FOREIGN KEY (projectID) REFERENCES project(projectID),
 	FOREIGN KEY (profileID) REFERENCES profile(profileID)

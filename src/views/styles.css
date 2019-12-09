@@ -19,11 +19,19 @@ td, th{
 table{
   margin-left:auto; 
   margin-right:auto; 
-  margin-top:30px;
+  margin-top:10px;
   border-collapse: separate; 
   border-spacing: 2px;
 }
 
 label { 
+  text-align: center;
   color: white;
+  font-size: 18pt;
 }
+
+p{
+  text-align: center;
+  color: white;
+  font-size: 18pt;
+  }
