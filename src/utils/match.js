@@ -41,7 +41,7 @@ function match(userProfile, listProjects) {
   };
   const fuse = new Fuse(projects, options);
   var results = fuse.search(userProfile);
-  console.log(results);
+  // console.log(results);
 
   // get original rows by index
   project_rows = [];
