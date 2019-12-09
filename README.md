@@ -37,6 +37,8 @@ The folder structure is based on the conventions found in [this article](https:/
 
 ## screenshots
 
+In order to test, sample project data was loaded using the [top starred projects on github](https://www.kaggle.com/chasewillden/topstarredopensourceprojects)
+
 *login view*
 ![Alt text](doc/../docs/screenshots/login.png)
 
